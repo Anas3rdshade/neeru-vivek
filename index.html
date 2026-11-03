@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neeru & Vivek · Wedding Invitation</title>
+<meta name="description" content="Neeru & Vivek, 3–8 December 2026, Vishram Vatika, Pilani. The Jakhar family invites you.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Neeru & Vivek · Wedding Invitation">
+<meta property="og:description" content="3–8 December 2026, Vishram Vatika, Pilani. The Jakhar family invites you.">
+<!-- WhatsApp needs an absolute og:image + og:url (GitHub Pages repo Anas3rdshade/neeru-vivek) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anas3rdshade.github.io/neeru-vivek/">
+<meta property="og:image" content="https://anas3rdshade.github.io/neeru-vivek/assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Outfit:wght@400;500;600&family=Rozha+One&display=swap" rel="stylesheet">
+<style>
+/* V2 with P2 fresco art (assets/). Figures are plate-sized layers over their plates; the motion rig comes in P3. */
+:root{
+  --plaster:#F4EEE3; --plaster-2:#E9DFCD; --plaster-3:#DCCDB3;
+  --ink:#2A2420; --ink-2:#5A4E44;
+  --indigo:#2E3A5C; --indigo-deep:#1B2140;
+  --madder:#A8475E; --ochre:#B07A2A; --verdigris:#4F7D70;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --serif:"Fraunces",Georgia,serif; --sans:"Outfit",system-ui,sans-serif; --deva:"Rozha One",serif;
+  --arch:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V46C0 29 15 17 31 11C40 8 46 5 50 0C54 5 60 8 69 11C85 17 100 29 100 46V130Z'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-bottom:80px;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--plaster);font-size:17px;line-height:1.55;overflow-x:hidden}
+body.locked{overflow:hidden;height:100dvh}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--madder);outline-offset:3px;border-radius:6px}
+
+/* Sky: fixed stacked grades, crossfaded by opacity only */
+.skies{position:fixed;inset:0;z-index:0;pointer-events:none}
+.sky{position:absolute;inset:0;opacity:0;transition:opacity 1.4s var(--ease)}
+.sky.on{opacity:1}
+.sky[data-k=dawn]{background:linear-gradient(180deg,#F3DCD3 0%,#F6E9DF 45%,var(--plaster) 100%)}
+.sky[data-k=morning]{background:linear-gradient(180deg,#E3E9DD 0%,#EFEEE4 50%,var(--plaster) 100%)}
+.sky[data-k=noon]{background:linear-gradient(180deg,#F2DDB4 0%,#F4E8CF 50%,var(--plaster) 100%)}
+.sky[data-k=dusk]{background:linear-gradient(180deg,#CFAFBF 0%,#E7C6C0 40%,#F2E2D6 100%)}
+.sky[data-k=night]{background:linear-gradient(180deg,rgba(27,33,64,.15),rgba(27,33,64,.55)),url(assets/sky.webp) center/cover no-repeat,var(--indigo-deep)}
+.stars{position:absolute;inset:0}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#FFF6E0;opacity:.2;animation:tw 5s var(--ease) infinite alternate}
+@keyframes tw{to{opacity:.95}}
+.shoot{position:absolute;top:14%;left:70%;width:120px;height:1.5px;background:linear-gradient(90deg,rgba(255,246,224,0),#FFF6E0);transform:rotate(-24deg);opacity:0}
+/* plaster grain, fixed */
+body::after{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.32;mix-blend-mode:multiply;background:url(assets/plaster.webp) 0 0/384px repeat}
+
+main{position:relative;z-index:10}
+.wrap{width:100%;max-width:560px;margin:0 auto;padding:0 16px}
+section{padding:96px 0}
+.eyebrow{display:inline-block;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;padding:7px 12px;border-radius:99px;background:rgba(42,36,32,.06);color:var(--ink-2)}
+.deva{font-family:var(--deva);font-weight:400}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- Gate ---------- */
+#gate{position:fixed;inset:0;z-index:60;perspective:1400px;cursor:pointer;background:var(--plaster-2)}
+/* gate: a 2:3 frame that covers the screen; the door leaves sit BEHIND the plate, whose doorway is transparent,
+   so the painted arch and Ganesha never move when the doors open */
+.gate-frame{position:absolute;left:50%;top:50%;width:max(100vw,100dvh*2/3);aspect-ratio:2/3;transform:translate(-50%,-50%)}
+.gate-plate{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+/* door box from _p2_full/make_full_report.json: x .2578-.7383, y .3392-.9896 of the plate */
+.doors{position:absolute;left:25.78%;top:33.92%;width:48.05%;height:65.04%;perspective:900px}
+/* dawn sky behind the leaves: the opening doorway floods with first light */
+.dawn{position:absolute;inset:0;background:radial-gradient(70% 38% at 50% 82%,#FFF4DC 0%,rgba(255,244,220,0) 75%),linear-gradient(180deg,#E7B4B2 0%,#F1CFC6 38%,#F6E3D6 72%,#F4EEE3 100%)}
+.leaf{position:absolute;top:0;bottom:0;width:50%;background:center/100% 100% no-repeat;backface-visibility:hidden;will-change:transform}
+.leaf.l{left:0;background-image:url(assets/door_l.webp);transform-origin:left center}
+.leaf.r{right:0;background-image:url(assets/door_r.webp);transform-origin:right center}
+.lintel{position:absolute;top:calc(50% - max(100vw,100dvh*2/3)*1.5*.15);left:50%;transform:translateX(-50%);text-align:center;z-index:2;pointer-events:none;white-space:nowrap}
+.roundel{width:92px;height:92px;margin:0 auto 8px;border-radius:50%;padding:4px;background:var(--plaster);box-shadow:0 0 0 1px rgba(168,71,94,.35),0 10px 30px -12px rgba(42,36,32,.35)}
+.roundel img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.lintel p{font-size:16px;color:var(--ink);background:rgba(244,238,227,.88);padding:4px 12px;border-radius:99px;display:inline-block}
+.seal{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);z-index:3;width:116px;height:116px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 38% 32%,#C45F78 0%,var(--madder) 45%,#7E2F44 100%);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.25),inset 0 -6px 12px rgba(0,0,0,.25),0 14px 30px -10px rgba(60,20,30,.55);
+  color:#F7E7DA;font:600 30px/1 var(--serif);letter-spacing:.02em}
+.seal span{display:block;font:500 9px/1 var(--sans);letter-spacing:.24em;margin-top:6px;opacity:.85}
+.gate-hint{position:absolute;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));text-align:center;z-index:3;pointer-events:none}
+.gate-hint b{display:inline-block;font:500 12px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;background:rgba(244,238,227,.9);padding:9px 14px;border-radius:99px;color:var(--ink)}
+.gate-hint small{display:table;margin:8px auto 0;font-family:var(--deva);font-size:15px;color:var(--ink);background:rgba(244,238,227,.92);padding:5px 12px;border-radius:99px}
+
+/* ---------- Names ---------- */
+#names{min-height:100dvh;display:flex;align-items:center;text-align:center;padding-top:72px}
+.invite{font:italic 400 19px/1.5 var(--serif);color:var(--ink-2);max-width:20em;margin:22px auto 0}
+h1{font:400 clamp(54px,17vw,92px)/.95 var(--serif);letter-spacing:-.02em;margin:18px 0 6px;color:var(--ink)}
+h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin:10px 0}
+.date{font:500 13px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);margin-top:18px}
+.count{display:flex;justify-content:center;gap:8px;margin:30px auto 8px}
+.count div{min-width:66px;padding:12px 6px 10px;border-radius:18px;background:rgba(255,252,246,.7);box-shadow:inset 0 0 0 1px rgba(42,36,32,.08)}
+.count b{display:block;font:600 26px/1 var(--serif);font-variant-numeric:tabular-nums}
+.count small{font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+.count-cap{font-size:13px;color:var(--ink-2)}
+.shloka{margin-top:42px;font-size:19px;line-height:1.7;color:var(--ink)}
+.bless{font:italic 400 16px/1.4 var(--serif);color:var(--ink-2);margin-top:8px}
+
+/* ---------- Niche (arched panel: double bezel) ---------- */
+.niche{position:relative;padding:7px;background:var(--plaster-2);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat}
+.niche-in{position:relative;overflow:hidden;background:var(--plaster-3);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat;aspect-ratio:4/5}
+.niche-in img,.niche-in canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fig{will-change:transform}
+.roundel-sm{width:96px;height:96px;margin:42px auto 18px;border-radius:50%;padding:4px;background:var(--plaster);box-shadow:0 0 0 1px rgba(168,71,94,.35),0 10px 30px -12px rgba(42,36,32,.35)}
+.roundel-sm img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.venue-art{border-radius:12px;overflow:hidden;margin:-12px -10px 22px;aspect-ratio:3/2}
+.venue-art img{width:100%;height:100%;object-fit:cover}
+.day{scroll-margin-top:-30px;background:url(assets/border.webp) center 34px/auto 20px repeat-x}
+.niche-in::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1.5px rgba(168,71,94,.45),inset 0 0 0 7px rgba(244,238,227,.35);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat;pointer-events:none}
+
+/* ---------- Family ---------- */
+.fam{display:grid;gap:14px}
+.fam-card{background:rgba(255,252,246,.78);border-radius:20px;padding:6px;box-shadow:0 20px 50px -30px rgba(42,36,32,.35)}
+.fam-core{border-radius:15px;padding:28px 22px;text-align:center;box-shadow:inset 0 0 0 1px rgba(168,71,94,.22)}
+.fam-core h2{font:400 44px/1 var(--serif);margin-bottom:12px}
+.fam-core p{font-size:15.5px;color:var(--ink-2);line-height:1.6}
+.weds{text-align:center;font:italic 400 22px/1 var(--serif);color:var(--madder);padding:6px 0}
+
+/* ---------- Day chapters ---------- */
+.day-head{font:inherit;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:end;margin-bottom:34px}
+.day-num{font:400 112px/.8 var(--serif);letter-spacing:-.04em;color:var(--ochre);grid-row:span 2}
+.day-of{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+.day-name{font:italic 400 26px/1.1 var(--serif)}
+.panels{display:grid;gap:44px}
+.panel figcaption{text-align:center;padding-top:18px}
+.panel h3{font:400 34px/1.05 var(--serif)}
+/* P5: darker madder so 20px captions pass 4.5:1 on the dusk grade (#A8475E was 3.5:1; #7A2E43 ≈5.5:1 on the darkest caption bg #E6BCAD) */
+.panel .deva{display:block;font-size:20px;color:#7A2E43;margin-top:4px}
+.time{display:inline-block;margin-top:12px;font:500 12.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:9px 14px;border-radius:99px;background:rgba(42,36,32,.07)}
+.motion-tag{position:absolute;top:58px;left:50%;transform:translateX(-50%);z-index:2;font:500 9.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;background:rgba(244,238,227,.9);padding:6px 10px;border-radius:99px;white-space:nowrap}
+/* swing pivot = the branch: y .125 of the plate = .05 of the niche after the 4:5 cover crop */
+.swing-fig{transform-origin:50% 5%;will-change:transform}
+/* P3 overlays: Lottie flames/petals/stars/lamp, screen-blended fire video, lantern glows; placed by JS from plate fractions */
+.fx{position:absolute;transform:translate(-50%,-50%);pointer-events:none}
+.fx svg{display:block}
+/* P5: tone the flat Lottie colours toward the fresco (blur tested and rejected: it reads as a smudge) */
+.fx:not(.v){filter:sepia(.3) saturate(.8);opacity:.92}
+.fx video{display:block;width:100%;height:100%;mix-blend-mode:screen;border-radius:50%;-webkit-mask:radial-gradient(closest-side,#000 60%,transparent);mask:radial-gradient(closest-side,#000 60%,transparent)}
+.fx.v{mix-blend-mode:screen}
+.glow{position:absolute;width:12%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,140,.85),rgba(255,190,90,.35) 45%,rgba(255,190,90,0));mix-blend-mode:screen;opacity:.35;pointer-events:none}
+
+.night{color:#F4EEE3}
+.night .day-of,.night .day-name{color:#E9DFCD}
+.night .day-num{color:#E2B86A}
+.night .panel .deva{color:#E9B7C2}
+.night .time{background:rgba(244,238,227,.12)}
+.night .eyebrow{background:rgba(244,238,227,.12);color:#E9DFCD}
+.night .card .eyebrow{background:rgba(42,36,32,.06);color:var(--ink-2)}
+#h1:focus{outline:none}
+.vidai-line{font:italic 400 24px/1.3 var(--serif);margin-top:10px}
+
+/* ---------- Cards on night ---------- */
+.card{background:rgba(255,252,246,.94);color:var(--ink);border-radius:20px;padding:6px;box-shadow:0 30px 60px -30px rgba(10,12,30,.6)}
+.card-in{border-radius:15px;padding:30px 22px;box-shadow:inset 0 0 0 1px rgba(168,71,94,.2)}
+.card h2{font:400 38px/1.05 var(--serif)}
+.card h3{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--madder);margin:26px 0 10px}
+.card ul{list-style:none;font-size:15.5px;line-height:1.75;color:var(--ink-2)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:500 14.5px/1 var(--sans);padding:8px 8px 8px 18px;border-radius:99px;background:var(--ink);color:var(--plaster);transition:transform .5s var(--ease)}
+.btn.ghost{background:rgba(42,36,32,.07);color:var(--ink)}
+.btn i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(244,238,227,.16);font-style:normal;transition:transform .5s var(--ease)}
+.btn.ghost i{background:rgba(42,36,32,.08)}
+.btn:active{transform:scale(.97)}
+.btn:hover i{transform:translate(2px,-1px) scale(1.05)}
+.btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
+.addr{font-size:15.5px;color:var(--ink-2);margin-top:10px}
+.regards{text-align:center;padding-bottom:150px}
+.regards p{color:#E9DFCD;max-width:22em;margin:12px auto 0;line-height:1.7}
+.regards .darshan{font:italic 400 22px/1.2 var(--serif);color:#F4EEE3;margin-top:14px}
+.regards .sign{font:400 46px/1 var(--serif);color:#F4EEE3;margin-top:44px}
+
+/* ---------- Day rail ---------- */
+.rail{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,140%);z-index:40;display:flex;gap:2px;padding:5px;border-radius:99px;background:rgba(244,238,227,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(42,36,32,.08),0 14px 30px -14px rgba(42,36,32,.4);transition:transform .9s var(--ease)}
+.rail.show{transform:translate(-50%,0)}
+.rail a{display:grid;place-items:center;min-width:48px;height:44px;border-radius:99px;text-decoration:none;font:600 16px/1 var(--serif);color:var(--ink-2);transition:background .5s var(--ease),color .5s var(--ease)}
+.rail a small{font:500 10px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;margin-top:-6px}
+.rail a.on{background:var(--ink);color:var(--plaster)}
+
+/* ---------- Music (off until tapped) ---------- */
+.music{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:40;display:flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 12px;border:0;border-radius:99px;cursor:pointer;font:500 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(244,238,227,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(42,36,32,.08),0 10px 24px -14px rgba(42,36,32,.45);opacity:0;pointer-events:none;transition:opacity .9s var(--ease)}
+.music.show{opacity:1;pointer-events:auto}
+.music .bars{display:flex;align-items:flex-end;gap:2px;width:14px;height:12px}
+.music .bars i{flex:1;height:100%;transform:scaleY(.3);transform-origin:bottom;background:currentColor;border-radius:1px;transition:transform .4s var(--ease)}
+.music[aria-pressed=true] .bars i{animation:eq 1.1s var(--ease) infinite alternate}
+.music[aria-pressed=true] .bars i:nth-child(2){animation-delay:-.4s}
+.music[aria-pressed=true] .bars i:nth-child(3){animation-delay:-.8s}
+@keyframes eq{from{transform:scaleY(.25)}to{transform:none}}
+
+@media (min-width:768px){
+  .panels.two{grid-template-columns:1fr 1fr}
+  .fam{grid-template-columns:1fr auto 1fr;align-items:center}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .sky,.rail{transition:none}
+  .stars i{animation:none;opacity:.7}
+  .music[aria-pressed=true] .bars i{animation:none;transform:scaleY(.7)}
+}
+</style>
+</head>
+<body class="locked">
+
+<div class="skies" aria-hidden="true">
+  <div class="sky on" data-k="dawn"></div>
+  <div class="sky" data-k="morning"></div>
+  <div class="sky" data-k="noon"></div>
+  <div class="sky" data-k="dusk"></div>
+  <div class="sky" data-k="night"><div class="stars" id="stars"></div><div class="shoot" id="shoot"></div></div>
+</div>
+
+<!-- Gate -->
+<div id="gate" role="dialog" aria-modal="true" aria-label="Wedding invitation, tap to open">
+  <div class="gate-frame">
+    <div class="doors"><div class="dawn"></div><div class="leaf l"></div><div class="leaf r"></div></div>
+    <img class="gate-plate" src="assets/gate_plate.webp" alt="A painted Shekhawati haveli doorway with Shri Ganesha on the lintel">
+  </div>
+  <div class="lintel">
+    <p class="deva" lang="hi">॥ श्री गणेशाय नमः ॥</p>
+  </div>
+  <button class="seal" id="seal" aria-label="Open the invitation">N&amp;V<span>OPEN</span></button>
+  <div class="gate-hint"><b>Tap anywhere to open</b><small lang="hi">कहीं भी छूकर निमंत्रण खोलें</small></div>
+</div>
+
+<!-- "Traditional wedding_ceremonial vibe with shehna" by DesiFreeMusic, pixabay.com/music/...-376293, Pixabay Content License (no attribution; checked 2026-11-02) -->
+<audio id="tune" src="assets/music.mp3" preload="none" loop></audio>
+<button class="music" id="music" type="button" aria-pressed="false" aria-label="Play shehnai music"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-t">Music</span></button>
+
+<nav class="rail" id="rail" aria-label="Jump to a day">
+  <a href="#d3" data-d="d3">3<small>Thu</small></a>
+  <a href="#d5" data-d="d5">5<small>Sat</small></a>
+  <a href="#d6" data-d="d6">6<small>Sun</small></a>
+  <a href="#d7" data-d="d7">7<small>Mon</small></a>
+  <a href="#d8" data-d="d8">8<small>Tue</small></a>
+</nav>
+
+<main id="main">
+  <!-- Names -->
+  <section id="names" data-sky="dawn">
+    <div class="wrap">
+      <span class="eyebrow rv">Wedding invitation</span>
+      <p class="invite rv">We cordially invite you to celebrate the wedding of</p>
+      <h1 id="h1" tabindex="-1" class="rv">Neeru<em>&amp;</em>Vivek</h1>
+      <p class="date rv">7th December 2026, Monday</p>
+      <div class="count rv" aria-live="off">
+        <div><b id="cd-d">--</b><small>Days</small></div>
+        <div><b id="cd-h">--</b><small>Hours</small></div>
+        <div><b id="cd-m">--</b><small>Mins</small></div>
+        <div><b id="cd-s">--</b><small>Secs</small></div>
+      </div>
+      <p class="count-cap rv">until the Baraat Aagaman</p>
+      <div class="roundel-sm rv"><img src="assets/ganesha.webp" alt="Shri Ganesha" loading="lazy"></div>
+      <p class="deva rv" lang="hi" style="font-size:17px;color:var(--ink-2);margin-bottom:6px">॥ श्री गणेशाय नमः ॥</p>
+      <p class="shloka deva rv" lang="sa" style="margin-top:0">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</p>
+      <p class="bless rv">With the blessings of the Almighty</p>
+    </div>
+  </section>
+
+  <!-- Family -->
+  <section id="family" data-sky="dawn">
+    <div class="wrap fam">
+      <div class="fam-card rv"><div class="fam-core">
+        <h2>Neeru</h2>
+        <p>(Granddaughter of Late Smt. Ankor&nbsp;Devi &amp; Late Shri Pratap&nbsp;Singh&nbsp;Jakhar)</p>
+        <p>(Daughter of Smt. Sushila&nbsp;Devi &amp; Shri Mahendra&nbsp;Kumar&nbsp;Jakhar)</p>
+        <p>R/o Vill. Dudi (Presently residing at Pilani), Jhunjhunu</p>
+      </div></div>
+      <p class="weds rv">weds</p>
+      <div class="fam-card rv"><div class="fam-core">
+        <h2>Vivek</h2>
+        <p>(Grandson of Late Smt. Shanti&nbsp;Devi &amp; Late Shri Richhpal&nbsp;Singh)</p>
+        <p>(Son of Smt. Ompati&nbsp;Devi &amp; Shri Satyavir&nbsp;Singh)</p>
+        <p>R/o Village Dagroli, Charkhi&nbsp;Dadri</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- Day 1 -->
+  <section class="day" id="d3" data-sky="dawn">
+    <div class="wrap">
+      <h2 class="day-head rv"><span class="day-num">03</span><span class="day-of">Day one of five</span><span class="day-name">Thursday, December</span></h2>
+      <div class="panels">
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/lagan_plate.webp" alt="A woman of the family carries the aarti thali for the Lagan" loading="lazy"><img class="fig" data-fig="lagan" src="assets/lagan_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Lagan</h3><span class="deva" lang="hi">लगन</span><span class="time">10:15 AM</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 2 -->
+  <section class="day" id="d5" data-sky="morning">
+    <div class="wrap">
+      <h2 class="day-head rv"><span class="day-num">05</span><span class="day-of">Day two of five</span><span class="day-name">Saturday, December</span></h2>
+      <div class="panels two">
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/baan_plate.webp" alt="Two women anoint the seat for the Baan" loading="lazy"><img class="fig" data-fig="baan" src="assets/baan_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Baan</h3><span class="deva" lang="hi">बान</span><span class="time">10:15 AM</span></figcaption></figure>
+        <figure class="panel rv"><div class="niche"><div class="niche-in" id="swing">
+            <img src="assets/mehendi_plate.webp" alt="The bride on a swing hung from a mango branch at the Mehendi" loading="lazy">
+            <img class="fig swing-fig" data-fig="mehendi" src="assets/mehendi_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Mehendi</h3><span class="deva" lang="hi">मेहँदी</span><span class="time">5:15 PM</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 3 -->
+  <section class="day" id="d6" data-sky="noon">
+    <div class="wrap">
+      <h2 class="day-head rv"><span class="day-num">06</span><span class="day-of">Day three of five</span><span class="day-name">Sunday, December</span></h2>
+      <div class="panels two">
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/haldi_plate.webp" alt="Women toss marigold petals at the Haldi" loading="lazy"><img class="fig" data-fig="haldi" src="assets/haldi_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Haldi</h3><span class="deva" lang="hi">हल्दी</span><span class="time">11:15 AM</span></figcaption></figure>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/sangeet_plate.webp" alt="Two women dance ghoomar at the Ladies' Sangeet" loading="lazy"><img class="fig" data-fig="sangeet" src="assets/sangeet_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Ladies' Sangeet</h3><span class="deva" lang="hi">महिला संगीत</span><span class="time">6:15 PM</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 4 -->
+  <section class="day" id="d7" data-sky="dusk">
+    <div class="wrap">
+      <h2 class="day-head rv"><span class="day-num">07</span><span class="day-of">Day four of five · The wedding</span><span class="day-name">Monday, December</span></h2>
+      <div class="panels two">
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/chakbhaat_plate.webp" alt="Women carry kalash pots past the potter's wheel at the Chak Bhaat" loading="lazy"><img class="fig" data-fig="chakbhaat" src="assets/chakbhaat_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Chak Bhaat</h3><span class="deva" lang="hi">चाक भात</span><span class="time">10:15 AM</span></figcaption></figure>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/baraat_plate.webp" alt="The groom rides his mare to the haveli for the Baraat Aagaman" loading="lazy"><img class="fig" data-fig="baraat" src="assets/baraat_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Baraat Aagaman</h3><span class="deva" lang="hi">बारात आगमन</span><span class="time">4:15 PM</span></figcaption></figure>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/dhukav_plate.webp" alt="The groom raises the neem stick to the toran at the Dhukav" loading="lazy"><img class="fig" data-fig="dhukav" src="assets/dhukav_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Dhukav</h3><span class="deva" lang="hi">ढुकाव</span><span class="time">7:15 PM</span></figcaption></figure>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/panigrahan_plate.webp" alt="The bride and groom sit hand in hand at the sacred fire" loading="lazy"><img class="fig" data-fig="panigrahan" src="assets/panigrahan_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Panigrahan Sanskar</h3><span class="deva" lang="hi">पाणिग्रहण संस्कार</span><span class="time">As per auspicious Muhurat</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 5 -->
+  <section class="day night" id="d8" data-sky="night">
+    <div class="wrap">
+      <h2 class="day-head rv"><span class="day-num">08</span><span class="day-of">Day five of five</span><span class="day-name">Tuesday, December</span></h2>
+      <div class="panels">
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/vidai_plate.webp" alt="Bearers carry the doli out under the stars at the Vidai" loading="lazy"><img class="fig" data-fig="vidai" src="assets/vidai_fig.webp" alt="" loading="lazy"></div></div>
+          <figcaption><h3>Vidai</h3><span class="deva" lang="hi">विदाई</span>
+            <p class="vidai-line">Taaron Ki Chhaon Mein</p><span class="deva" lang="hi">तारों की छाँव में</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Venue -->
+  <section id="venue" class="night" data-sky="night">
+    <div class="wrap">
+      <div class="card rv"><div class="card-in">
+        <div class="venue-art"><img src="assets/venue.webp" alt="Vishram Vatika at night, lit for the wedding" loading="lazy"></div>
+        <span class="eyebrow">Vivah Sthal · <span class="deva" lang="hi">विवाह स्थल</span></span>
+        <h2 style="margin-top:16px">Vishram Vatika</h2>
+        <p class="addr">Pilani, Jhunjhunu,<br>Rajasthan – 333031</p>
+        <div class="btns">
+          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/tWm63TmLKo2xMyQBA">Get directions<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
+          <a class="btn ghost" href="assets/neeru-vivek.ics" type="text/calendar">Save all 10 functions<i><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg></i></a>
+          <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Neeru%20weds%20Vivek&dates=20261207%2F20261208&location=Vishram%20Vatika%2C%20Pilani%2C%20Jhunjhunu%2C%20Rajasthan%20333031&details=Chak%20Bhaat%2010%3A15%20AM%20%C2%B7%20Baraat%20Aagaman%204%3A15%20PM%20%C2%B7%20Dhukav%207%3A15%20PM%20%C2%B7%20Panigrahan%20Sanskar%20as%20per%20auspicious%20Muhurat.%20Directions%3A%20https%3A%2F%2Fmaps.app.goo.gl%2FtWm63TmLKo2xMyQBA">Google Calendar · 7 Dec<i><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg></i></a>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp" class="night" data-sky="night" style="padding-top:0">
+    <div class="wrap">
+      <div class="card rv"><div class="card-in">
+        <span class="eyebrow">R.S.V.P.</span>
+        <h2 style="margin-top:16px">Awaiting your presence</h2>
+        <p class="deva" lang="hi" style="color:var(--madder);font-size:19px;margin-top:6px">सादर आमंत्रित</p>
+        <h3>Bhai-Bhabhi Paksh</h3>
+        <ul><li>Smt. Pinky – Shri Abhishek Jakhar</li><li>Smt. Suman – Shri Mukesh Jakhar</li></ul>
+        <h3>Nanihal Paksh</h3>
+        <ul><li>Smt. Sushila – Prof. Sajjan Singh Dhillon</li><li>Smt. Neelam – Shri Chandrabhan Dhillon</li></ul>
+        <h3>Bua-Foofa Paksh</h3>
+        <ul><li>Smt. Bhateri – Late Shri Ranveer Sheoran</li><li>Smt. Munni – Shri Kapoor Vijarniya</li><li>Smt. Rasmati – Shri Rajveer Sangwan</li><li>Smt. Sushila – Shri Vinod Sangwan</li><li>Smt. Babita – Shri Rajkumar Dairwal</li></ul>
+        <h3>Solicited by · <span class="deva" lang="hi">विनीत</span></h3>
+        <p style="font:400 22px/1.2 var(--serif)">Shri Mahendra Kumar Jakhar</p>
+        <p class="addr">Village &amp; Post – Doodi<br>Ward No. 26, Adarsh Colony, Behind Rani Sati Temple, Pilani, District Jhunjhunu (Rajasthan)</p>
+        <div class="btns">
+          <a class="btn" target="_blank" rel="noopener" href="https://wa.me/917597971198?text=Namaste%2C%20we%20will%20attend%20Neeru%20%26%20Vivek%27s%20wedding.">WhatsApp 75979 71198<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
+          <a class="btn ghost" href="tel:+917597971198" aria-label="Call 75979 71198">Call<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
+          <a class="btn" target="_blank" rel="noopener" href="https://wa.me/918949509834?text=Namaste%2C%20we%20will%20attend%20Neeru%20%26%20Vivek%27s%20wedding.">WhatsApp 89495 09834<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
+          <a class="btn ghost" href="tel:+918949509834" aria-label="Call 89495 09834">Call<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- Regards -->
+  <section class="regards night" data-sky="night">
+    <div class="wrap">
+      <span class="eyebrow rv">With best compliments</span>
+      <p class="darshan rv">Darshanabhilashi</p>
+      <p class="rv">Shri Atar Singh, Rajpal, Rajendra Singh, Virendra Singh, Krishan Kumar, Yogesh, Umesh, Aashish, Siddharth, Manvik, Hitansh</p>
+      <p class="rv"><em>and the Entire Jakhar Family &amp; Friends</em></p>
+      <p class="sign rv">Neeru &amp; Vivek</p>
+      <p class="deva rv" lang="hi" style="font-size:19px">आपकी प्रतीक्षा में</p>
+    </div>
+  </section>
+</main>
+
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lottie_light.min.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasGsap = !!window.gsap;
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+  history.scrollRestoration = 'manual'; scrollTo(0, 0);
+
+  // P3 motion table. All positions are fractions of the 2:3 plate; Y() maps plate y to % of the 4:5 niche (cover crops 1/12 top and bottom).
+  const Y = y => (y - 1 / 12) / (5 / 6) * 100;
+  // figure loops: a <-> b extremes (dx, dy plate fractions; deg), pivot at the feet, d = half-cycle seconds, bob = walking step (dy)
+  const M = {
+    lagan:      {piv: [.27, .87], a: {deg: -2}, b: {deg: 2}, d: 3},
+    baan:       {a: {dx: -.015}, b: {dx: .015}, d: 2.5},
+    mehendi:    {piv: [.5, .125], a: {deg: -1.4}, b: {deg: 1.4}, d: 2.6},
+    haldi:      {a: {dy: 0}, b: {dy: -.02}, d: 2},
+    sangeet:    {piv: [.55, .86], a: {deg: -3}, b: {deg: 3}, d: 3.5},
+    chakbhaat:  {a: {dx: -.05}, b: {dx: .05}, d: 4, bob: -.006},
+    baraat:     {piv: [.45, .88], a: {dx: -.04, deg: -1}, b: {dx: .04, deg: 1}, d: 3.5, bob: -.006},
+    dhukav:     {piv: [.27, .89], a: {deg: -2}, b: {deg: 2}, d: 2.5},
+    panigrahan: {a: {dy: .004}, b: {dy: -.008}, d: 2.5},
+    vidai:      {a: {dx: -.06, dy: 0}, b: {dx: .06, dy: -.02}, d: 4}
+  };
+  // dx is a fraction of the width (= xPercent); dy is a fraction of the plate height = 1.2x the niche height
+  const TF = m => Object.assign({}, 'dx' in m && {xPercent: m.dx * 100}, 'dy' in m && {yPercent: m.dy * 120}, 'deg' in m && {rotation: m.deg});
+  // overlays: [asset (v: = video), centre x, centre y, width as a fraction of the niche]; assets/fx/ from _p3_motion/make_fx.py
+  const FX = {
+    lagan:      [['candle_flame', .721, .668, .07], ['candle_flame', .770, .665, .07]],
+    baan:       [['candle_flame', .909, .777, .07]],
+    dhukav:     [['candle_flame', .845, .646, .06], ['candle_flame', .896, .646, .06], ['candle_flame', .947, .646, .06]],
+    haldi:      [['petals_falling', .45, .42, .75]],
+    panigrahan: [['v:sparks', .494, .56, .34], ['v:fire', .494, .668, .17]],
+    vidai:      [['twinkle_stars', .62, .24, .8], ['shooting_star', .64, .26, .62]]
+  };
+  const AR = {candle_flame: '3/4', twinkle_stars: '1125/168', shooting_star: '1520/1045'};
+  // warm pulse on the five painted Baraat lanterns (P5: the photo hanging-lamp Lottie was dropped; it could not be toned to the fresco)
+  const GLOW = {baraat: [[.2, .357], [.316, .357], [.452, .337], [.6, .299], [.744, .254]]};
+
+  // Stars for the night sky
+  const stars = document.getElementById('stars');
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('i');
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*70}%;animation-delay:${(Math.random()*5).toFixed(2)}s;transform:scale(${(.6+Math.random()).toFixed(2)})`;
+    stars.appendChild(s);
+  }
+
+  // Countdown: Baraat Aagaman, 7 Dec 2026 4:15 PM IST
+  const T = Date.UTC(2026, 11, 7, 10, 45), pad = n => String(n).padStart(2, '0');
+  const tick = () => {
+    // after the Baraat Aagaman the countdown has nothing to count: hide it rather than show 00 00 00 00
+    if (Date.now() >= T) { document.querySelectorAll('.count,.count-cap').forEach(e => e.hidden = true); return; }
+    let d = (T - Date.now()) / 1000;
+    const v = [Math.floor(d / 86400), Math.floor(d % 86400 / 3600), Math.floor(d % 3600 / 60), Math.floor(d % 60)];
+    ['d','h','m','s'].forEach((k, i) => document.getElementById('cd-' + k).textContent = pad(v[i]));
+  };
+  tick(); setInterval(tick, 1000);
+
+  // Music: never autoplays; the button toggles it
+  const music = document.getElementById('music'), tune = document.getElementById('tune'), mt = document.getElementById('music-t');
+  tune.volume = .55;
+  const setMusic = on => { music.setAttribute('aria-pressed', on); music.setAttribute('aria-label', (on ? 'Pause' : 'Play') + ' shehnai music'); mt.textContent = on ? 'Pause' : 'Music'; };
+  music.addEventListener('click', () => tune.paused ? tune.play().then(() => setMusic(true)).catch(() => setMusic(false)) : (tune.pause(), setMusic(false)));
+  document.addEventListener('visibilitychange', () => { if (document.hidden && !tune.paused) { tune.pause(); setMusic(false); } });
+
+  // Gate
+  const gate = document.getElementById('gate'), rail = document.getElementById('rail');
+  // the gate is modal: nothing behind it is reachable by Tab or a screen reader until it opens
+  const behind = [document.getElementById('main'), rail, music];
+  behind.forEach(e => e.inert = true);
+  document.getElementById('seal').focus({preventScroll: true, focusVisible: false});  // no ring on every guest's first screen; Tab still shows it
+  let opened = false;
+  const finish = () => {
+    behind.forEach(e => e.inert = false);
+    gate.remove(); document.body.classList.remove('locked'); rail.classList.add('show'); music.classList.add('show');
+    document.getElementById('h1').focus({preventScroll: true}); start();
+  };
+  gate.addEventListener('click', () => {
+    if (opened) return; opened = true;
+    if (reduce || !hasGsap) return finish();
+    gsap.timeline({onComplete: finish})
+      .to('.seal', {scale: .6, opacity: 0, duration: .5, ease: 'power3.in'})
+      .to('.lintel,.gate-hint', {opacity: 0, duration: .5, ease: 'power2.out'}, '<')
+      .to('.leaf.l', {rotateY: -104, duration: 1.7, ease: 'expo.inOut'}, '-=.1')
+      .to('.leaf.r', {rotateY: 104, duration: 1.7, ease: 'expo.inOut'}, '<')
+      .to('.gate-frame', {scale: 1.12, duration: 1.8, ease: 'power2.inOut'}, '<.5')
+      .to(gate, {backgroundColor: 'rgba(233,223,205,0)', duration: 1.2, ease: 'power2.out'}, '<.4')
+      .to(gate, {opacity: 0, duration: .7, ease: 'power2.out'}, '-=.5');
+  });
+
+  function start() {
+    // Reveal on view
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+    // Sky grade + rail, by section in view
+    const skies = [...document.querySelectorAll('.sky')], links = [...rail.querySelectorAll('a')];
+    const setSky = k => skies.forEach(s => s.classList.toggle('on', s.dataset.k === k));
+    const so = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      setSky(e.target.dataset.sky);
+      const id = e.target.classList.contains('day') ? e.target.id : null;
+      links.forEach(a => a.classList.toggle('on', a.dataset.d === id));
+    }), {rootMargin: '-45% 0px -45% 0px'});
+    document.querySelectorAll('[data-sky]').forEach(s => so.observe(s));
+
+    // Overlays on every panel; in reduced motion they stay as still frames
+    document.querySelectorAll('.fig').forEach(fig => {
+      const k = fig.dataset.fig, box = fig.parentElement, fx = [];
+      (FX[k] || []).forEach(([n, x, y, w]) => {
+        const el = document.createElement('div');
+        el.className = 'fx' + (n.startsWith('v:') ? ' v' : '');
+        el.style.cssText = `left:${x * 100}%;top:${Y(y)}%;width:${w * 100}%;aspect-ratio:${AR[n] || 1}`;
+        if (n.startsWith('v:')) {
+          const v = document.createElement('video');
+          Object.assign(v, {muted: true, loop: true, playsInline: true, preload: 'none', poster: `assets/fx/${n.slice(2)}.jpg`, src: `assets/fx/${n.slice(2)}.mp4`});
+          v.setAttribute('muted', ''); v.setAttribute('aria-hidden', 'true');
+          el.appendChild(v); fx.push({play: () => v.play().catch(() => {}), pause: () => v.pause()});
+        } else {
+          let a = null; const go = [];
+          fx.push({
+            load() { if (a || !window.lottie) return; a = lottie.loadAnimation({container: el, renderer: 'svg', loop: true, autoplay: false, path: `assets/fx/${n}.json`});
+              a.addEventListener('DOMLoaded', () => { go.splice(0).forEach(f => f()); if (reduce) a.goToAndStop(Math.round(a.totalFrames / 2), true); }); },
+            play() { this.load(); a && a.isLoaded ? a.play() : go.push(() => a.play()); },
+            pause() { a && a.pause(); go.length = 0; }
+          });
+        }
+        box.appendChild(el);
+      });
+      (GLOW[k] || []).forEach(([x, y]) => { const g = document.createElement('i'); g.className = 'glow'; g.style.cssText = `left:${x * 100}%;top:${Y(y)}%`; box.appendChild(g); });
+      if (reduce || !hasGsap) { fx.forEach(f => f.load && f.load()); return; }
+
+      // one slow loop per figure layer, ranges = the extremes checked in _p2_full/make_full.py
+      const m = M[k], tl = gsap.timeline({paused: true});
+      if (m) {
+        if (m.piv) gsap.set(fig, {transformOrigin: `${m.piv[0] * 100}% ${Y(m.piv[1])}%`});
+        tl.fromTo(fig, TF(m.a), {...TF(m.b), duration: m.d, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
+        if (m.bob) tl.fromTo(fig, {yPercent: 0}, {yPercent: m.bob * 120, duration: m.d / 6, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
+      }
+      const glows = box.querySelectorAll('.glow');
+      if (glows.length) tl.to(glows, {opacity: .9, duration: 1.1, ease: 'sine.inOut', stagger: {each: .37, repeat: -1, yoyo: true}}, 0);
+      ScrollTrigger.create({trigger: box, start: 'top bottom', end: 'bottom top', onToggle: s => {
+        box.classList.toggle('live', s.isActive);
+        s.isActive ? (tl.play(), fx.forEach(f => f.play())) : (tl.pause(), fx.forEach(f => f.pause()));
+      }});
+    });
+
+    if (reduce || !hasGsap) return;
+
+    // Shooting star over the night sky (Day 5 onwards)
+    const shoot = gsap.timeline({repeat: -1, repeatDelay: 5, paused: true})
+      .fromTo('#shoot', {x: 0, y: 0, opacity: 0}, {x: -260, y: 120, opacity: 1, duration: .5, ease: 'power2.in'})
+      .to('#shoot', {opacity: 0, duration: .5, ease: 'power2.out'});
+    ScrollTrigger.create({trigger: '#d8', start: 'top 60%', endTrigger: '.regards', end: 'bottom bottom', onToggle: s => s.isActive ? shoot.play() : shoot.pause()});
+  }
+})();
+</script>
+</body>
+</html>

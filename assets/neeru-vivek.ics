@@ -1,0 +1,100 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//3rd Shade//Neeru Vivek invite//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Neeru & Vivek wedding
+X-WR-TIMEZONE:Asia/Kolkata
+BEGIN:VEVENT
+UID:lagan-20261203@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Lagan · Neeru & Vivek
+DTSTART:20261203T044500Z
+DTEND:20261203T064500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:baan-20261205@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Baan · Neeru & Vivek
+DTSTART:20261205T044500Z
+DTEND:20261205T064500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:mehendi-20261205@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Mehendi · Neeru & Vivek
+DTSTART:20261205T114500Z
+DTEND:20261205T134500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:haldi-20261206@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Haldi · Neeru & Vivek
+DTSTART:20261206T054500Z
+DTEND:20261206T074500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:sangeet-20261206@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Ladies' Sangeet · Neeru & Vivek
+DTSTART:20261206T124500Z
+DTEND:20261206T144500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:chakbhaat-20261207@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Chak Bhaat · Neeru & Vivek
+DTSTART:20261207T044500Z
+DTEND:20261207T064500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:baraat-20261207@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Baraat Aagaman · Neeru & Vivek
+DTSTART:20261207T104500Z
+DTEND:20261207T124500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:dhukav-20261207@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Dhukav · Neeru & Vivek
+DTSTART:20261207T134500Z
+DTEND:20261207T154500Z
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Directions: https://maps.app.goo.gl/tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:panigrahan-20261207@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Panigrahan Sanskar · Neeru & Vivek
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:As per auspicious Muhurat. Directions: https://maps.app.goo.gl/
+ tWm63TmLKo2xMyQBA
+END:VEVENT
+BEGIN:VEVENT
+UID:vidai-20261208@neeru-vivek.invite
+DTSTAMP:20261102T000000Z
+SUMMARY:Vidai · Neeru & Vivek
+DTSTART;VALUE=DATE:20261208
+DTEND;VALUE=DATE:20261209
+LOCATION:Vishram Vatika\, Pilani\, Jhunjhunu\, Rajasthan 333031
+DESCRIPTION:Taaron Ki Chhaon Mein. Directions: https://maps.app.goo.gl/tWm6
+ 3TmLKo2xMyQBA
+END:VEVENT
+END:VCALENDAR
