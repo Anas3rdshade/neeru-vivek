@@ -55,7 +55,7 @@ main{position:relative;z-index:10}
 .wrap{width:100%;max-width:560px;margin:0 auto;padding:0 16px}
 section{padding:96px 0}
 .eyebrow{display:inline-block;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;padding:7px 12px;border-radius:99px;background:rgba(42,36,32,.06);color:var(--ink-2)}
-.deva{font-family:var(--deva);font-weight:400}
+.deva{font-family:var(--deva);font-weight:400;letter-spacing:0;text-transform:none}  /* P7-3: tracking split the conjuncts in the 11 px labels */
 .rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .rv.in{opacity:1;transform:none}
 
@@ -85,17 +85,62 @@ section{padding:96px 0}
 .gate-hint b{display:inline-block;font:500 12px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;background:rgba(244,238,227,.9);padding:9px 14px;border-radius:99px;color:var(--ink)}
 .gate-hint small{display:table;margin:8px auto 0;font-family:var(--deva);font-size:15px;color:var(--ink);background:rgba(244,238,227,.92);padding:5px 12px;border-radius:99px}
 
+/* P7-3: on landscape screens the 2:3 cover crop cut Ganesha off; contain the plate and let the wide facade fill the sides */
+@media (min-aspect-ratio:1/1){
+  #gate{background:linear-gradient(rgba(233,223,205,.6),rgba(233,223,205,.6)),url(assets/hero_plate_wide.webp) center/cover,var(--plaster-2)}
+  .gate-frame{width:min(100vw,100dvh*2/3);box-shadow:0 0 60px rgba(42,36,32,.35)}
+  .lintel{top:calc(50% - min(100vw,100dvh*2/3)*1.5*.15)}
+}
+
 /* ---------- Names ---------- */
-#names{min-height:100dvh;display:flex;align-items:center;text-align:center;padding-top:72px}
-.invite{font:italic 400 19px/1.5 var(--serif);color:var(--ink-2);max-width:20em;margin:22px auto 0}
-h1{font:400 clamp(54px,17vw,92px)/.95 var(--serif);letter-spacing:-.02em;margin:18px 0 6px;color:var(--ink)}
+/* P7-1 hero: painted jharokha facade (_p7/make_hero.py). The stage keeps the plate's aspect and is wider than the screen
+   so the jharokha opening is ~290 px wide at 375 (P7-3: 180vw -> 162vw so both peacocks stand fully on screen); the copy is laid into the opening by the plate fractions below (_p7/measure.py). */
+#names{--vx:34%;--pw:162vw;--ar:1.5;--oy0:.2982;--oy1:.6745;--ow:.4805;position:relative;text-align:center;padding:0 0 64px;overflow:hidden}
+.hero{position:absolute;left:50%;top:calc(-1*var(--up,0px));width:var(--pw);aspect-ratio:1/var(--ar);transform:translateX(-50%);pointer-events:none;
+  -webkit-mask:linear-gradient(#000 88%,transparent);mask:linear-gradient(#000 88%,transparent)}
+.hero>*{position:absolute;will-change:transform}
+.h-plate{inset:0;width:100%;height:100%}
+.h-plate.w{display:none}
+/* P7-1 r2 (Anas: content hard to read over the art): a plaster veil mutes the facade, brightest behind the copy in the opening */
+.h-veil{inset:0;background:radial-gradient(var(--vx) 24% at 50% 47%,rgba(250,242,232,.72),rgba(250,242,232,0) 100%),rgba(244,238,227,.3)}
+/* layer boxes = plate fractions (left/top = top-left corner, width); set per layout */
+.h-toran{left:24%;top:27.4%;width:52%}
+.h-pea{bottom:auto}
+.h-pea.l{left:18.75%;top:59.4%;width:11%;transform-origin:75% 54%}
+.h-pea.r{left:70%;top:59.4%;width:11%;transform-origin:27% 54%}
+.h-pig{left:25%;top:5%;width:24%}
+/* --ot = how far the toran hangs into the opening */
+.hero-copy{--ot:.05;position:relative;padding-top:calc(var(--pw)*var(--ar)*(var(--oy0) + var(--ot)) - var(--up,0px))}
+.in-arch{min-height:calc(var(--pw)*var(--ar)*(var(--oy1) - var(--oy0) - var(--ot)));max-width:calc(var(--pw)*var(--ow) - 20px);margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0 10px}
+/* cream halo keeps the copy readable where it meets the painted frame */
+.in-arch .eyebrow{background:rgba(255,250,240,.9);color:var(--ink)}
+.in-arch .invite,.in-arch h1{text-shadow:0 0 2px #FBF3E8,0 0 10px rgba(251,243,232,.95),0 0 22px rgba(251,243,232,.8)}
+.invite{font:italic 500 17px/1.45 var(--serif);color:var(--ink);max-width:16em;margin:12px auto 0}
+h1{position:relative;font:400 clamp(54px,17vw,84px)/.95 var(--serif);letter-spacing:-.02em;margin:14px 0 0;color:var(--ink)}
 h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin:10px 0}
-.date{font:500 13px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);margin-top:18px}
-.count{display:flex;justify-content:center;gap:8px;margin:30px auto 8px}
-.count div{min-width:66px;padding:12px 6px 10px;border-radius:18px;background:rgba(255,252,246,.7);box-shadow:inset 0 0 0 1px rgba(42,36,32,.08)}
+/* gold-foil sweep: a gold copy of the names (the & hidden, so it stays madder) whose highlight band slides across.
+   shortcut: animates background-position (paint only, one h1, 1.6 s in every 8 s), not transform */
+.foil{position:absolute;inset:0;color:transparent;pointer-events:none;
+  background:linear-gradient(105deg,transparent 42%,rgba(226,182,90,.7) 46%,#FFF3C9 50%,rgba(226,182,90,.7) 54%,transparent 58%) 130% 0/260% 100% no-repeat;
+  -webkit-background-clip:text;background-clip:text;animation:foil 8s 1.2s var(--ease) infinite}
+.foil{text-shadow:none}  /* the halo would paint through the transparent gold glyphs and wash out the names */
+.foil em{visibility:hidden}
+@keyframes foil{0%{background-position:130% 0}22%,100%{background-position:-30% 0}}
+/* date plaque: gold leaf drawn in a canvas over the real date text (which stays in the DOM for screen readers) */
+.date-card{display:inline-block;margin-top:14px;padding:14px 10px 12px;border-radius:22px;background:rgba(250,244,234,.95);box-shadow:inset 0 0 0 1px rgba(176,122,42,.35),0 24px 50px -24px rgba(42,36,32,.55)}
+.plaque{position:relative;display:inline-grid;place-items:center;padding:15px 16px;min-width:286px;border-radius:14px 14px 6px 6px;background:rgba(255,250,240,.9);box-shadow:inset 0 0 0 1px rgba(176,122,42,.5),0 14px 30px -18px rgba(42,36,32,.5)}
+.plaque canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;touch-action:none;cursor:grab}
+.date{font:600 13.5px/1.3 var(--sans);letter-spacing:.14em;white-space:nowrap;text-transform:uppercase;color:var(--ink)}
+.rub{display:block;margin-top:10px;font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);transition:opacity .6s var(--ease)}
+.revealed .rub{opacity:0}
+.count{display:flex;justify-content:center;gap:7px;margin:16px auto 8px;perspective:600px}
+.count div{min-width:66px;padding:12px 6px 10px;border-radius:16px;background:#FFFCF6;box-shadow:inset 0 0 0 1px rgba(42,36,32,.08)}
 .count b{display:block;font:600 26px/1 var(--serif);font-variant-numeric:tabular-nums}
 .count small{font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
 .count-cap{font-size:13px;color:var(--ink-2)}
+/* countdown flips in on the reveal; .pre is set by JS only, so no-JS and reduced motion show it */
+.pre .count div{opacity:0;transform:rotateX(-90deg)}
+.petals{position:fixed;inset:0;z-index:65;pointer-events:none;width:100%;height:100%}
 .shloka{margin-top:42px;font-size:19px;line-height:1.7;color:var(--ink)}
 .bless{font:italic 400 16px/1.4 var(--serif);color:var(--ink-2);margin-top:8px}
 
@@ -108,21 +153,41 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .roundel-sm img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 .venue-art{border-radius:12px;overflow:hidden;margin:-12px -10px 22px;aspect-ratio:3/2}
 .venue-art img{width:100%;height:100%;object-fit:cover}
-.day{scroll-margin-top:-30px;background:url(assets/border.webp) center 34px/auto 20px repeat-x}
+/* P7-2: the painted parrot frieze (_p7/make_p72.py) replaces the thin P2 border between days */
+.day{scroll-margin-top:-30px;background:url(assets/p72_frieze.webp) center 30px/auto 42px repeat-x}
+
+/* ---------- P7-2 fresco walls: frieze strip on top, dado band at the bottom ---------- */
+.frz,.dado{display:block;height:42px;background:url(assets/p72_frieze.webp) center/auto 100% repeat-x}
+.dado{height:30px;background-image:url(assets/p72_dado.webp)}
+.frz.top{margin:-62px 0 52px}
+/* Venue + RSVP: plaster panels framed by the frieze and dado */
+.card{background:url(assets/plaster.webp) 0 0/384px,rgba(250,244,234,.97);overflow:hidden}
+.card>.frz{margin:-6px -6px 6px;height:38px}
+.card>.dado{margin:6px -6px -6px;height:26px}
 .niche-in::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1.5px rgba(168,71,94,.45),inset 0 0 0 7px rgba(244,238,227,.35);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat;pointer-events:none}
 
 /* ---------- Family ---------- */
 .fam{display:grid;gap:14px}
-.fam-card{background:rgba(255,252,246,.78);border-radius:20px;padding:6px;box-shadow:0 20px 50px -30px rgba(42,36,32,.35)}
-.fam-core{border-radius:15px;padding:28px 22px;text-align:center;box-shadow:inset 0 0 0 1px rgba(168,71,94,.22)}
-.fam-core h2{font:400 44px/1 var(--serif);margin-bottom:12px}
-.fam-core p{font-size:15.5px;color:var(--ink-2);line-height:1.6}
-.weds{text-align:center;font:italic 400 22px/1 var(--serif);color:var(--madder);padding:6px 0}
+/* P7-2: each family sits in a painted cusped arch (assets/p72_arch.webp, 720x1080) drawn as a border-image, so the arch
+   grows with the text. Slices: crown 39% of the height, jambs 13.2% of the width, sill 2%; widths in cqw of the card. */
+.fam-card{container-type:inline-size}
+.fam-core{border-style:solid;border-width:58.5cqw 13.2cqw 3cqw;border-image:url(assets/p72_arch.webp) 39% 13.2% 2% stretch;
+  padding:0 6px 26px;text-align:center}
+/* the opening is keyed transparent, so the text sits on the pale sky; the name rises into the crown.
+   P7-3: the padding-box plaster wash was dropped, its top edge cut a hard line through the paragraphs */
+.fam-core h2{font:400 44px/1 var(--serif);margin:-30cqw 0 12px}
+.fam-core .eyebrow{margin:0 0 14px;background:rgba(255,250,240,.9);color:var(--ink)}
+.fam-core p{font-size:15.5px;color:#4A3F37;line-height:1.6}  /* P7-3: one step darker now the wash is gone */
+.weds{text-align:center;font:italic 400 22px/1 var(--serif);color:#983D54;padding:6px 0}
 
 /* ---------- Day chapters ---------- */
+/* P7-3: the scrubbed sun can pass behind a heading; a plaster halo keeps the heading crisp over it (night has no sun) */
+.day:not(.night) .day-head>span{text-shadow:0 0 2px var(--plaster),0 0 12px rgba(251,243,232,.95),0 0 26px rgba(251,243,232,.8)}
 .day-head{font:inherit;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:end;margin-bottom:34px}
-.day-num{font:400 112px/.8 var(--serif);letter-spacing:-.04em;color:var(--ochre);grid-row:span 2}
-.day-of{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+/* P7-3: deeper ochre so the numeral (the only date number in the heading) clears 3:1 on every day sky, dusk included */
+.day-num{font:400 112px/.8 var(--serif);letter-spacing:-.04em;color:#7E5414;grid-row:span 2}
+.day-of{justify-self:start;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink);padding:5px 9px;margin-left:-9px;border-radius:99px;background:rgba(251,243,232,.88)}
+.night .day-of{background:rgba(244,238,227,.12)}
 .day-name{font:italic 400 26px/1.1 var(--serif)}
 .panels{display:grid;gap:44px}
 .panel figcaption{text-align:center;padding-top:18px}
@@ -144,10 +209,12 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 
 .night{color:#F4EEE3}
 .night .day-of,.night .day-name{color:#E9DFCD}
+/* P7-3: the fixed moon and the star field sit behind night text; an indigo halo keeps it crisp */
+.night :is(.day-head>span,.regards p,.diya-hint,.blessing,.vidai-line){text-shadow:0 0 2px #1B2140,0 0 12px rgba(27,33,64,.9),0 0 24px rgba(27,33,64,.7)}
 .night .day-num{color:#E2B86A}
 .night .panel .deva{color:#E9B7C2}
 .night .time{background:rgba(244,238,227,.12)}
-.night .eyebrow{background:rgba(244,238,227,.12);color:#E9DFCD}
+.night .eyebrow{background:rgba(27,33,64,.62);color:#F4EEE3}  /* P7-3: darker pill, the star field sat behind the old glassy one */
 .night .card .eyebrow{background:rgba(42,36,32,.06);color:var(--ink-2)}
 #h1:focus{outline:none}
 .vidai-line{font:italic 400 24px/1.3 var(--serif);margin-top:10px}
@@ -156,7 +223,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .card{background:rgba(255,252,246,.94);color:var(--ink);border-radius:20px;padding:6px;box-shadow:0 30px 60px -30px rgba(10,12,30,.6)}
 .card-in{border-radius:15px;padding:30px 22px;box-shadow:inset 0 0 0 1px rgba(168,71,94,.2)}
 .card h2{font:400 38px/1.05 var(--serif)}
-.card h3{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--madder);margin:26px 0 10px}
+.card h3{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#983D54;margin:26px 0 10px}
 .card ul{list-style:none;font-size:15.5px;line-height:1.75;color:var(--ink-2)}
 .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:500 14.5px/1 var(--sans);padding:8px 8px 8px 18px;border-radius:99px;background:var(--ink);color:var(--plaster);transition:transform .5s var(--ease)}
@@ -189,9 +256,46 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .music[aria-pressed=true] .bars i:nth-child(3){animation-delay:-.8s}
 @keyframes eq{from{transform:scaleY(.25)}to{transform:none}}
 
+/* ---------- P7-2 Light a diya ---------- */
+#diyas{text-align:center;padding-top:40px;padding-bottom:40px}
+.diya-hint{color:#E9DFCD;margin-top:12px;font-size:15.5px}
+.diya-row{display:flex;justify-content:center;gap:4px;margin:30px auto 0}
+.diya{position:relative;flex:0 1 64px;min-width:56px;min-height:44px;padding:44px 2px 6px;border:0;border-radius:16px;background:none;cursor:pointer;color:#E9DFCD;font:inherit}
+.diya img{width:100%;height:auto}
+.diya small{display:block;margin-top:6px;font:500 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+/* flame (candle_flame Lottie) stands on the wick at the spout; the glow is a soft disc, opacity only */
+.diya .flame{position:absolute;left:79%;top:24px;width:42%;aspect-ratio:3/4;transform:translateX(-50%);pointer-events:none;opacity:0;transition:opacity .5s var(--ease)}
+.diya .flame svg{display:block}
+.diya .halo{position:absolute;left:79%;top:2px;width:120%;aspect-ratio:1;transform:translateX(-50%) scale(.6);border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,206,120,.55),rgba(255,180,80,.18) 55%,rgba(255,180,80,0));opacity:0;transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
+.diya[aria-pressed=true] .flame{opacity:1}
+.diya[aria-pressed=true] .halo{opacity:1;transform:translateX(-50%) scale(1)}
+.diya[aria-pressed=true] small{color:#FFE7B0}
+.blessing{text-wrap:balance;font:italic 400 22px/1.35 var(--serif);color:#FFF1D2;max-width:17em;margin:26px auto 0;opacity:0;transform:translateY(14px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+.blessing.on{opacity:1;transform:none}
+
+/* ---------- P7-2 sun-to-moon arc + atishbazi sparkle (fixed sky, behind the content) ---------- */
+/* the sun is scrubbed across the sky from Day 1 to Day 4 by GSAP; the moon lives inside the night grade, so it fades in with it */
+.orb{position:absolute;width:clamp(58px,15vw,96px);height:auto;opacity:0;will-change:transform,opacity}
+.orb.sun{left:0;top:0}
+.orb.moon{right:9vw;top:9vh;opacity:.8}
+.spark{position:absolute;width:0;height:0}
+.spark i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#FFE7A8;box-shadow:0 0 8px 2px rgba(255,214,140,.75);opacity:0}
+
 @media (min-width:768px){
   .panels.two{grid-template-columns:1fr 1fr}
+  #family .wrap{max-width:900px}
+  .diya{flex-basis:84px}
   .fam{grid-template-columns:1fr auto 1fr;align-items:center}
+  /* desktop: the wide facade (same jharokha, wall extended both sides) fills the width */
+  /* --up lifts the whole stage (P7-3) so the date card and countdown are above the fold on a 1280x800 laptop */
+  #names{--vx:16%;--pw:max(100vw,1400px);--ar:.6667;--oy0:.3076;--oy1:.6748;--ow:.2109;--up:min(150px,9vw)}
+  .h-plate.p{display:none}.h-plate.w{display:block}
+  .h-toran{left:37.5%;top:28.2%;width:25%}
+  .h-pea.l{left:30.6%;top:54%;width:8.5%}
+  .h-pea.r{left:60.7%;top:54%;width:8.5%}
+  .h-pig{left:53%;top:7%;width:12%}
+  h1{font-size:72px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -199,6 +303,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   .sky,.rail{transition:none}
   .stars i{animation:none;opacity:.7}
   .music[aria-pressed=true] .bars i{animation:none;transform:scaleY(.7)}
+  .foil{display:none}
+  .orb.sun,.spark{display:none}
+  .diya .flame,.diya .halo,.blessing{transition:none}
 }
 </style>
 </head>
@@ -209,8 +316,11 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   <div class="sky" data-k="morning"></div>
   <div class="sky" data-k="noon"></div>
   <div class="sky" data-k="dusk"></div>
-  <div class="sky" data-k="night"><div class="stars" id="stars"></div><div class="shoot" id="shoot"></div></div>
+  <div class="sky" data-k="night"><div class="stars" id="stars"></div><div class="shoot" id="shoot"></div>
+    <img class="orb moon" src="assets/p72_moon.webp" alt="" loading="lazy"><div id="sparks"></div></div>
+  <img class="orb sun" id="sun" src="assets/p72_sun.webp" alt="">
 </div>
+<canvas class="petals" id="petals" aria-hidden="true"></canvas>
 
 <!-- Gate -->
 <div id="gate" role="dialog" aria-modal="true" aria-label="Wedding invitation, tap to open">
@@ -240,18 +350,32 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 <main id="main">
   <!-- Names -->
   <section id="names" data-sky="dawn">
-    <div class="wrap">
-      <span class="eyebrow rv">Wedding invitation</span>
-      <p class="invite rv">We cordially invite you to celebrate the wedding of</p>
-      <h1 id="h1" tabindex="-1" class="rv">Neeru<em>&amp;</em>Vivek</h1>
-      <p class="date rv">7th December 2026, Monday</p>
-      <div class="count rv" aria-live="off">
+    <div class="hero" aria-hidden="true">
+      <img class="h-plate p" src="assets/hero_plate.webp" alt="">
+      <img class="h-plate w" src="assets/hero_plate_wide.webp" alt="">
+      <i class="h-veil"></i>
+      <img class="h-pig" src="assets/hero_pigeons.webp" alt="">
+      <img class="h-pea l" src="assets/hero_peacock_l.webp" alt="">
+      <img class="h-pea r" src="assets/hero_peacock_r.webp" alt="">
+      <img class="h-toran" src="assets/hero_toran.webp" alt="">
+    </div>
+    <div class="wrap hero-copy">
+      <div class="in-arch">
+        <span class="eyebrow rv">Wedding invitation</span>
+        <p class="invite rv">We cordially invite you to celebrate the wedding of</p>
+        <h1 id="h1" tabindex="-1" class="rv">Neeru<em>&amp;</em>Vivek</h1>
+      </div>
+      <div class="date-card rv">
+      <div class="plaque" id="plaque"><p class="date">7th December 2026, Monday</p><canvas aria-hidden="true"></canvas></div>
+      <span class="rub" id="rub" aria-hidden="true">Rub the gold leaf to reveal the date</span>
+      <div class="count" aria-live="off">
         <div><b id="cd-d">--</b><small>Days</small></div>
         <div><b id="cd-h">--</b><small>Hours</small></div>
         <div><b id="cd-m">--</b><small>Mins</small></div>
         <div><b id="cd-s">--</b><small>Secs</small></div>
       </div>
-      <p class="count-cap rv">until the Baraat Aagaman</p>
+      <p class="count-cap">until the Baraat Aagaman</p>
+      </div>
       <div class="roundel-sm rv"><img src="assets/ganesha.webp" alt="Shri Ganesha" loading="lazy"></div>
       <p class="deva rv" lang="hi" style="font-size:17px;color:var(--ink-2);margin-bottom:6px">॥ श्री गणेशाय नमः ॥</p>
       <p class="shloka deva rv" lang="sa" style="margin-top:0">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</p>
@@ -261,6 +385,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 
   <!-- Family -->
   <section id="family" data-sky="dawn">
+    <i class="frz top" aria-hidden="true"></i>
     <div class="wrap fam">
       <div class="fam-card rv"><div class="fam-core">
         <h2>Neeru</h2>
@@ -278,7 +403,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     </div>
   </section>
 
-  <!-- Day 1 -->
+  <!-- Day 1 (its frieze closes Family: P7-3 dropped the Family dado, it stacked into a double band) -->
   <section class="day" id="d3" data-sky="dawn">
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">03</span><span class="day-of">Day one of five</span><span class="day-name">Thursday, December</span></h2>
@@ -320,7 +445,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   <!-- Day 4 -->
   <section class="day" id="d7" data-sky="dusk">
     <div class="wrap">
-      <h2 class="day-head rv"><span class="day-num">07</span><span class="day-of">Day four of five · The wedding</span><span class="day-name">Monday, December</span></h2>
+      <h2 class="day-head rv"><span class="day-num">07</span><span class="day-of">Day four · The wedding</span><span class="day-name">Monday, December</span></h2>
       <div class="panels two">
         <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/chakbhaat_plate.webp" alt="Women carry kalash pots past the potter's wheel at the Chak Bhaat" loading="lazy"><img class="fig" data-fig="chakbhaat" src="assets/chakbhaat_fig.webp" alt="" loading="lazy"></div></div>
           <figcaption><h3>Chak Bhaat</h3><span class="deva" lang="hi">चाक भात</span><span class="time">10:15 AM</span></figcaption></figure>
@@ -349,7 +474,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   <!-- Venue -->
   <section id="venue" class="night" data-sky="night">
     <div class="wrap">
-      <div class="card rv"><div class="card-in">
+      <div class="card rv"><i class="frz" aria-hidden="true"></i><div class="card-in">
         <div class="venue-art"><img src="assets/venue.webp" alt="Vishram Vatika at night, lit for the wedding" loading="lazy"></div>
         <span class="eyebrow">Vivah Sthal · <span class="deva" lang="hi">विवाह स्थल</span></span>
         <h2 style="margin-top:16px">Vishram Vatika</h2>
@@ -359,17 +484,17 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
           <a class="btn ghost" href="assets/neeru-vivek.ics" type="text/calendar">Save all 10 functions<i><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg></i></a>
           <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Neeru%20weds%20Vivek&dates=20261207%2F20261208&location=Vishram%20Vatika%2C%20Pilani%2C%20Jhunjhunu%2C%20Rajasthan%20333031&details=Chak%20Bhaat%2010%3A15%20AM%20%C2%B7%20Baraat%20Aagaman%204%3A15%20PM%20%C2%B7%20Dhukav%207%3A15%20PM%20%C2%B7%20Panigrahan%20Sanskar%20as%20per%20auspicious%20Muhurat.%20Directions%3A%20https%3A%2F%2Fmaps.app.goo.gl%2FtWm63TmLKo2xMyQBA">Google Calendar · 7 Dec<i><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg></i></a>
         </div>
-      </div></div>
+      </div><i class="dado" aria-hidden="true"></i></div>
     </div>
   </section>
 
   <!-- RSVP -->
   <section id="rsvp" class="night" data-sky="night" style="padding-top:0">
     <div class="wrap">
-      <div class="card rv"><div class="card-in">
+      <div class="card rv"><i class="frz" aria-hidden="true"></i><div class="card-in">
         <span class="eyebrow">R.S.V.P.</span>
         <h2 style="margin-top:16px">Awaiting your presence</h2>
-        <p class="deva" lang="hi" style="color:var(--madder);font-size:19px;margin-top:6px">सादर आमंत्रित</p>
+        <p class="deva" lang="hi" style="color:#983D54;font-size:19px;margin-top:6px">सादर आमंत्रित</p>
         <h3>Bhai-Bhabhi Paksh</h3>
         <ul><li>Smt. Pinky – Shri Abhishek Jakhar</li><li>Smt. Suman – Shri Mukesh Jakhar</li></ul>
         <h3>Nanihal Paksh</h3>
@@ -385,12 +510,29 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
           <a class="btn" target="_blank" rel="noopener" href="https://wa.me/918949509834?text=Namaste%2C%20we%20will%20attend%20Neeru%20%26%20Vivek%27s%20wedding.">WhatsApp 89495 09834<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
           <a class="btn ghost" href="tel:+918949509834" aria-label="Call 89495 09834">Call<i><svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></i></a>
         </div>
-      </div></div>
+      </div><i class="dado" aria-hidden="true"></i></div>
+    </div>
+  </section>
+
+  <!-- P7-2: Light a diya, one per wedding day; all five lit = blessing + petals -->
+  <section id="diyas" class="night" data-sky="night">
+    <div class="wrap">
+      <span class="eyebrow rv">Light a diya for Neeru &amp; Vivek</span>
+      <p class="diya-hint rv">Tap each lamp, one for every day of the wedding</p>
+      <div class="diya-row rv" role="group" aria-label="Five diyas, one for each wedding day">
+        <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 3 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>3 Dec</small></button>
+        <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 5 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>5 Dec</small></button>
+        <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 6 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>6 Dec</small></button>
+        <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 7 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>7 Dec</small></button>
+        <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 8 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>8 Dec</small></button>
+      </div>
+      <p class="blessing" id="blessing" aria-live="polite"></p>
     </div>
   </section>
 
   <!-- Regards -->
   <section class="regards night" data-sky="night">
+    <i class="frz top" aria-hidden="true"></i>
     <div class="wrap">
       <span class="eyebrow rv">With best compliments</span>
       <p class="darshan rv">Darshanabhilashi</p>
@@ -399,6 +541,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       <p class="sign rv">Neeru &amp; Vivek</p>
       <p class="deva rv" lang="hi" style="font-size:19px">आपकी प्रतीक्षा में</p>
     </div>
+    <i class="dado" aria-hidden="true" style="margin-top:56px"></i>
   </section>
 </main>
 
@@ -462,6 +605,67 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   };
   tick(); setInterval(tick, 1000);
 
+  // Gold-foil copy of the names for the shimmer sweep (hidden from screen readers)
+  const h1 = document.getElementById('h1'), foil = document.createElement('span');
+  foil.className = 'foil'; foil.setAttribute('aria-hidden', 'true'); foil.innerHTML = h1.innerHTML; h1.appendChild(foil);
+
+  // Painted petals (assets/petals.webp = one strip of square cells, _p7/make_hero.py) on one fixed canvas.
+  // burst() = a shower from a point; drift(on) = at most 14 slow petals while the Names section is on screen.
+  const P = (() => {
+    const cv = document.getElementById('petals'), cx = cv.getContext('2d'), img = new Image(), parts = [];
+    let cells = 0, cell = 0, raf = 0, drifting = false, last = 0, W = 0, H = 0;
+    img.onload = () => { cell = img.height; cells = Math.round(img.width / cell); };
+    const size = () => { const d = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0); };
+    const make = (x, y, vx, vy, burst) => ({x, y, vx, vy, burst, r: Math.random() * 6.3, vr: (Math.random() - .5) * 3, s: 14 + Math.random() * 14,
+      c: Math.floor(Math.random() * Math.max(cells, 1)), ph: Math.random() * 6.3, flip: Math.random() * 6.3, life: 1});
+    const frame = t => {
+      const dt = Math.min(.05, (t - (last || t)) / 1000); last = t;
+      cx.clearRect(0, 0, W, H);
+      if (drifting && parts.filter(p => !p.burst).length < 14 && Math.random() < dt * 3)
+        parts.push(make(Math.random() * W, -30, 0, 30 + Math.random() * 30, false));
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const p = parts[i];
+        if (p.burst) { p.vy += 260 * dt; p.vx *= 1 - 1.6 * dt; p.vy *= 1 - 1.6 * dt; p.life -= dt / 4.5; }
+        p.ph += dt * 1.6; p.flip += dt * 2.4; p.r += p.vr * dt;
+        p.x += (p.vx + Math.sin(p.ph) * 26) * dt; p.y += p.vy * dt;
+        if (p.y > H + 40 || p.life <= 0) { parts.splice(i, 1); continue; }
+        if (!cells) continue;
+        cx.save(); cx.globalAlpha = Math.min(1, p.life * 2) * .95; cx.translate(p.x, p.y); cx.rotate(p.r); cx.scale(1, .55 + .45 * Math.abs(Math.cos(p.flip)));
+        cx.drawImage(img, p.c * cell, 0, cell, cell, -p.s / 2, -p.s / 2, p.s, p.s); cx.restore();
+      }
+      raf = parts.length || drifting ? requestAnimationFrame(frame) : 0;
+      if (!raf) { cx.clearRect(0, 0, W, H); last = 0; }
+    };
+    const run = () => { if (!raf) raf = requestAnimationFrame(frame); };
+    addEventListener('resize', size);
+    return {
+      init() { if (reduce) return; size(); img.src = 'assets/petals.webp'; },
+      burst(x, y, n) { if (reduce) return; for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + (Math.random() - .5) * 2.6, v = 160 + Math.random() * 320;
+        parts.push(make(x, y, Math.cos(a) * v, Math.sin(a) * v, true)); } run(); },
+      drift(on) { if (reduce) return; drifting = on; if (on) run(); }
+    };
+  })();
+  P.init();
+
+  // P7-2 Light a diya: five painted lamps (assets/p72_diya.webp), the candle_flame Lottie on each wick once tapped.
+  // All five lit -> blessing line + petal shower. Reduced motion: all lit, flames frozen, no petals.
+  const diyas = [...document.querySelectorAll('.diya')], blessing = document.getElementById('blessing');
+  const BLESS = 'May their home glow like these five lamps, always.';  // draft line, family to confirm
+  const light = (b, still) => {
+    if (b.getAttribute('aria-pressed') === 'true') return;
+    b.setAttribute('aria-pressed', 'true'); b.setAttribute('aria-label', b.getAttribute('aria-label').replace('Light', 'Lit:'));
+    if (window.lottie) { const a = lottie.loadAnimation({container: b.querySelector('.flame'), renderer: 'svg', loop: true, autoplay: !still, path: 'assets/fx/candle_flame.json'});
+      if (still) a.addEventListener('DOMLoaded', () => a.goToAndStop(Math.round(a.totalFrames / 2), true)); }
+  };
+  const allLit = () => {
+    blessing.textContent = BLESS; blessing.classList.add('on');
+    if (reduce) return;
+    const r = document.querySelector('.diya-row').getBoundingClientRect();
+    P.burst(r.left + r.width / 2, r.top, 46);
+  };
+  if (reduce) { diyas.forEach(b => light(b, true)); allLit(); }
+  else diyas.forEach(b => b.addEventListener('click', () => { light(b); if (diyas.every(d => d.getAttribute('aria-pressed') === 'true')) allLit(); }));
+
   // Music: never autoplays; the button toggles it
   const music = document.getElementById('music'), tune = document.getElementById('tune'), mt = document.getElementById('music-t');
   tune.volume = .55;
@@ -478,7 +682,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   let opened = false;
   const finish = () => {
     behind.forEach(e => e.inert = false);
-    gate.remove(); document.body.classList.remove('locked'); rail.classList.add('show'); music.classList.add('show');
+    gate.remove(); document.body.classList.remove('locked'); music.classList.add('show');
+    // P7-3: the rail waits for the first scroll; at rest on a phone it sat on the countdown digits
+    const railOn = () => rail.classList.toggle('show', scrollY > 160); railOn(); addEventListener('scroll', railOn, {passive: true});
     document.getElementById('h1').focus({preventScroll: true}); start();
   };
   gate.addEventListener('click', () => {
@@ -489,15 +695,102 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       .to('.lintel,.gate-hint', {opacity: 0, duration: .5, ease: 'power2.out'}, '<')
       .to('.leaf.l', {rotateY: -104, duration: 1.7, ease: 'expo.inOut'}, '-=.1')
       .to('.leaf.r', {rotateY: 104, duration: 1.7, ease: 'expo.inOut'}, '<')
+      .call(() => P.burst(innerWidth / 2, innerHeight * .42, 44), null, '<.7')
       .to('.gate-frame', {scale: 1.12, duration: 1.8, ease: 'power2.inOut'}, '<.5')
       .to(gate, {backgroundColor: 'rgba(233,223,205,0)', duration: 1.2, ease: 'power2.out'}, '<.4')
       .to(gate, {opacity: 0, duration: .7, ease: 'power2.out'}, '-=.5');
   });
 
+  // Gold-leaf date plaque. Touch: rub it off. Mouse/no touch: drag to rub, or scrolling wipes it (V1 pattern).
+  // Either way it reveals itself once the plaque has scrolled off the top, so no guest misses the date.
+  const plaque = document.getElementById('plaque'), names = document.getElementById('names');
+  let revealed = false;
+  const reveal = () => {
+    if (revealed) return; revealed = true;
+    names.classList.add('revealed');
+    const r = plaque.getBoundingClientRect();
+    if (reduce || !hasGsap) { names.classList.remove('pre'); return; }
+    gsap.to(plaque.querySelector('canvas'), {opacity: 0, duration: .8, ease: 'power2.out'});
+    P.burst(r.left + r.width / 2, r.top + r.height / 2, 40);
+    gsap.to('.count div', {opacity: 1, rotateX: 0, duration: .9, ease: 'back.out(1.6)', stagger: .12, delay: .25, onComplete: () => names.classList.remove('pre')});
+  };
+  function scratch() {
+    if (reduce || !hasGsap) { plaque.querySelector('canvas').remove(); document.getElementById('rub').remove(); return; }
+    names.classList.add('pre');
+    const c = plaque.querySelector('canvas'), x = c.getContext('2d', {willReadFrequently: true});
+    let w = 0, h = 0, lw = 0, zig = [], best = 0;
+    // (re)lay the gold leaf at the plaque's current size; P7-3: called again on resize/rotation, which restarts the rub
+    const draw = () => {
+      const dpr = Math.min(2, devicePixelRatio || 1);
+      w = plaque.offsetWidth; h = plaque.offsetHeight; lw = Math.max(26, h * .5);
+      c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // gold leaf: warm metallic gradient, leaf seams, flecks, a thin madder rule
+      const g = x.createLinearGradient(0, 0, w, h);
+      [[0, '#9A7426'], [.28, '#E9D49A'], [.5, '#C9A24A'], [.72, '#F3E2A8'], [1, '#93701F']].forEach(([o, col]) => g.addColorStop(o, col));
+      x.fillStyle = g; x.fillRect(0, 0, w, h);
+      x.strokeStyle = 'rgba(120,86,24,.35)'; x.lineWidth = 1;
+      for (let i = 1; i < 6; i++) { x.beginPath(); x.moveTo(w * i / 6 + (Math.random() - .5) * 8, 0); x.lineTo(w * i / 6 + (Math.random() - .5) * 8, h); x.stroke(); }
+      for (let i = 0; i < 700; i++) { x.fillStyle = `rgba(255,250,225,${Math.random() * .35})`; x.fillRect(Math.random() * w, Math.random() * h, 1.2, 1.2); }
+      x.strokeStyle = 'rgba(122,46,67,.55)'; x.strokeRect(5.5, 5.5, w - 11, h - 11);
+      x.fillStyle = 'rgba(90,40,30,.75)'; x.font = '600 11px Outfit, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillText('✦  THE  WEDDING  DAY  ✦', w / 2, h / 2);
+      x.globalCompositeOperation = 'destination-out'; x.lineCap = x.lineJoin = 'round'; x.lineWidth = lw;
+      zig = []; for (let y = lw * .3, i = 0; y < h + lw * .3; y += lw * .55, i++) zig.push([i % 2 ? w + 4 : -4, y]);
+      best = 0;
+    };
+    draw();
+    new ResizeObserver(() => { if (!revealed && (plaque.offsetWidth !== w || plaque.offsetHeight !== h)) draw(); }).observe(plaque);
+    // how much is cleared, sampled on a coarse grid
+    const cleared = () => { const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0, t = 0;
+      for (let i = 3; i < d.length; i += 4 * 9) { t++; if (d[i] < 40) n++; } return n / t; };
+    let checks = 0;
+    const stroke = (a, b) => { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke();
+      if (++checks % 6 === 0 && cleared() > .58) reveal(); };
+    // rubbing (finger or mouse)
+    let prev = null;
+    const pt = e => { const r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    c.addEventListener('pointerdown', e => { prev = pt(e); c.setPointerCapture(e.pointerId); stroke(prev, [prev[0] + .1, prev[1]]); });
+    c.addEventListener('pointermove', e => { if (!prev || revealed) return; const p = pt(e); stroke(prev, p); prev = p; });
+    ['pointerup', 'pointercancel'].forEach(t => c.addEventListener(t, () => prev = null));
+    // scroll wipe: a zigzag drawn up to the scroll progress, on devices without touch
+    const noTouch = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const onScroll = () => {
+      if (revealed) return removeEventListener('scroll', onScroll);
+      const r = plaque.getBoundingClientRect();
+      if (r.bottom < 0) return reveal();
+      if (!noTouch) return;
+      const p = Math.min(1, scrollY / (innerHeight * .35)), n = zig.length - 1, upto = p * n;
+      if (upto <= best) return;
+      for (let k = Math.floor(best); k < Math.min(Math.ceil(upto), n); k++) {
+        const a = zig[k], b = zig[k + 1], f = Math.min(1, upto - k), f0 = Math.max(0, best - k);
+        stroke([a[0] + (b[0] - a[0]) * f0, a[1] + (b[1] - a[1]) * f0], [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]);
+      }
+      best = upto; if (p >= 1) reveal();
+    };
+    addEventListener('scroll', onScroll, {passive: true});
+  }
+  if (!reduce && hasGsap) names.classList.add('pre');
+  document.fonts.ready.then(scratch);  // plaque size depends on the web font
+
   function start() {
     // Reveal on view
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+    // Hero layers: idle loops while Names is on screen, scroll parallax, pigeons lift off; petals drift over Names only
+    if (!reduce && hasGsap) {
+      const idle = gsap.timeline({paused: true})
+        .fromTo('.h-pea.l', {rotation: -2.5}, {rotation: 2, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0)
+        .fromTo('.h-pea.r', {rotation: 2.5}, {rotation: -2, duration: 3.1, ease: 'sine.inOut', yoyo: true, repeat: -1}, .4)
+        .fromTo('.h-toran', {rotation: -1.1, transformOrigin: '50% 0%'}, {rotation: 1.1, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0)
+        .fromTo('.h-pig', {y: 0}, {y: -3, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
+      ScrollTrigger.create({trigger: names, start: 'top bottom', end: 'bottom top', onToggle: s => { s.isActive ? idle.play() : idle.pause(); P.drift(s.isActive); }});
+      const par = {trigger: names, start: 'top top', end: 'bottom top', scrub: true};
+      gsap.to('.h-plate,.h-veil', {yPercent: 14, ease: 'none', scrollTrigger: par});
+      gsap.to('.h-toran', {yPercent: 120, ease: 'none', scrollTrigger: par});
+      gsap.to('.h-pea', {yPercent: 30, ease: 'none', scrollTrigger: par});
+      gsap.to('.h-pig', {xPercent: 70, yPercent: -260, rotation: -8, opacity: 0, ease: 'power1.in', scrollTrigger: {trigger: names, start: 'top top', end: '+=45%', scrub: .6}});
+    }
 
     // Sky grade + rail, by section in view
     const skies = [...document.querySelectorAll('.sky')], links = [...rail.querySelectorAll('a')];
@@ -557,7 +850,36 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     const shoot = gsap.timeline({repeat: -1, repeatDelay: 5, paused: true})
       .fromTo('#shoot', {x: 0, y: 0, opacity: 0}, {x: -260, y: 120, opacity: 1, duration: .5, ease: 'power2.in'})
       .to('#shoot', {opacity: 0, duration: .5, ease: 'power2.out'});
-    ScrollTrigger.create({trigger: '#d8', start: 'top 60%', endTrigger: '.regards', end: 'bottom bottom', onToggle: s => s.isActive ? shoot.play() : shoot.pause()});
+    ScrollTrigger.create({trigger: '#d8', start: 'top 60%', endTrigger: '.regards', end: 'bottom top', onToggle: s => s.isActive ? shoot.play() : shoot.pause()});  // 'bottom bottom' of the last section never fires at page end
+
+    // P7-2 sun-to-moon arc: the painted sun rises with Day 1 (dawn), tops out at Day 3 (noon), sinks into the dusk of Day 4,
+    // then drifts up to the moon's place and fades as the night grade (which carries the moon) fades in at Vidai.
+    // vw/vh via functions so a resize re-measures; transform + opacity only.
+    const vw = v => () => innerWidth * v / 100, vh = v => () => innerHeight * v / 100;
+    gsap.set('#sun', {x: vw(6), y: vh(48), opacity: 0});
+    gsap.timeline({scrollTrigger: {trigger: '#d3', start: 'top 80%', endTrigger: '#d8', end: 'top 45%', scrub: 1, invalidateOnRefresh: true}})
+      .to('#sun', {opacity: .6, duration: .4, ease: 'none'}, 0)  // muted: it passes behind the day headings
+      .to('#sun', {x: vw(44), duration: 2, ease: 'none'}, 0)
+      .to('#sun', {y: vh(6), duration: 2, ease: 'sine.out'}, 0)
+      .to('#sun', {x: vw(70), y: vh(30), duration: 1.4, ease: 'sine.in'}, 2)
+      .to('#sun', {x: vw(78), y: vh(9), opacity: 0, duration: .6, ease: 'none'}, 3.4);
+
+    // P7-2 atishbazi: a few soft gold sparkle bursts in the Vidai / Regards sky, one every ~3 s, never loud
+    const sparks = document.getElementById('sparks'), burstAt = () => {
+      const s = document.createElement('div'); s.className = 'spark';
+      s.style.cssText = `left:${10 + Math.random() * 80}%;top:${6 + Math.random() * 30}%`;
+      for (let i = 0; i < 18; i++) s.appendChild(document.createElement('i'));
+      sparks.appendChild(s);
+      const dots = s.children;
+      gsap.timeline({onComplete: () => s.remove()})
+        .fromTo(dots, {x: 0, y: 0, opacity: 0, scale: 1}, {opacity: 1, duration: .3, ease: 'power1.out',
+          x: i => Math.cos(i / 18 * 6.283) * (36 + Math.random() * 16), y: i => Math.sin(i / 18 * 6.283) * (36 + Math.random() * 16)}, 0)
+        .to(dots, {x: (i, el) => gsap.getProperty(el, 'x') * 1.6, y: i => `+=${18 + Math.random() * 10}`, opacity: 0, scale: .4, duration: 1.6, ease: 'power2.out'}, .25);
+    };
+    let sparkT = 0;
+    const sparkLoop = on => { clearInterval(sparkT); if (on) { burstAt(); sparkT = setInterval(() => !document.hidden && burstAt(), 2800); } };
+    // end 'bottom top' is never reached, so the sparkle keeps going at the very end of the page (Regards is the last section)
+    ScrollTrigger.create({trigger: '#d8', start: 'top 40%', endTrigger: '.regards', end: 'bottom top', onToggle: s => sparkLoop(s.isActive)});
   }
 })();
 </script>
