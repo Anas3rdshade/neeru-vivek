@@ -128,9 +128,12 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 @keyframes foil{0%{background-position:130% 0}22%,100%{background-position:-30% 0}}
 /* date plaque: gold leaf drawn in a canvas over the real date text (which stays in the DOM for screen readers) */
 .date-card{display:inline-block;margin-top:14px;padding:14px 10px 12px;border-radius:22px;background:rgba(250,244,234,.95);box-shadow:inset 0 0 0 1px rgba(176,122,42,.35),0 24px 50px -24px rgba(42,36,32,.55)}
-.plaque{position:relative;display:inline-grid;place-items:center;padding:15px 16px;min-width:286px;border-radius:14px 14px 6px 6px;background:rgba(255,250,240,.9);box-shadow:inset 0 0 0 1px rgba(176,122,42,.5),0 14px 30px -18px rgba(42,36,32,.5)}
+.plaque{position:relative;display:inline-grid;place-items:center;padding:24px 22px 22px;min-width:286px;border-radius:14px 14px 6px 6px;background:rgba(255,250,240,.9);box-shadow:inset 0 0 0 1px rgba(176,122,42,.5),0 14px 30px -18px rgba(42,36,32,.5)}
 .plaque canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;touch-action:none;cursor:grab}
 .date{font:600 13.5px/1.3 var(--sans);letter-spacing:.14em;white-space:nowrap;text-transform:uppercase;color:var(--ink)}
+/* P7-5: a taller plaque, so the scratch reads as a moment; the comma is for screen readers only */
+.date b{display:block;margin-bottom:8px;font:500 30px/1.1 var(--serif);letter-spacing:0;text-transform:none;color:#7A2E43}
+.date .cm{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .rub{display:block;margin-top:10px;font:500 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);transition:opacity .6s var(--ease)}
 .revealed .rub{opacity:0}
 .count{display:flex;justify-content:center;gap:7px;margin:16px auto 8px;perspective:600px}
@@ -257,7 +260,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 @keyframes eq{from{transform:scaleY(.25)}to{transform:none}}
 
 /* ---------- P7-2 Light a diya ---------- */
-#diyas{text-align:center;padding-top:40px;padding-bottom:40px}
+#diyas{text-align:center;padding-top:40px;padding-bottom:40px;overflow-x:clip}  /* lit halos (120% wide) on the end lamps spill past a phone edge */
 .diya-hint{color:#E9DFCD;margin-top:12px;font-size:15.5px}
 .diya-row{display:flex;justify-content:center;gap:4px;margin:30px auto 0}
 .diya{position:relative;flex:0 1 64px;min-width:56px;min-height:44px;padding:44px 2px 6px;border:0;border-radius:16px;background:none;cursor:pointer;color:#E9DFCD;font:inherit}
@@ -366,8 +369,8 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
         <h1 id="h1" tabindex="-1" class="rv">Neeru<em>&amp;</em>Vivek</h1>
       </div>
       <div class="date-card rv">
-      <div class="plaque" id="plaque"><p class="date">7th December 2026, Monday</p><canvas aria-hidden="true"></canvas></div>
-      <span class="rub" id="rub" aria-hidden="true">Rub the gold leaf to reveal the date</span>
+      <div class="plaque" id="plaque"><p class="date"><b>7th December 2026</b><span class="cm">, </span>Monday</p><canvas aria-hidden="true"></canvas></div>
+      <span class="rub" id="rub" aria-hidden="true">Scroll on, or rub, to reveal the date</span>
       <div class="count" aria-live="off">
         <div><b id="cd-d">--</b><small>Days</small></div>
         <div><b id="cd-h">--</b><small>Hours</small></div>
@@ -518,7 +521,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   <section id="diyas" class="night" data-sky="night">
     <div class="wrap">
       <span class="eyebrow rv">Light a diya for Neeru &amp; Vivek</span>
-      <p class="diya-hint rv">Tap each lamp, one for every day of the wedding</p>
+      <p class="diya-hint rv">Five lamps, one for each day of celebration</p>
       <div class="diya-row rv" role="group" aria-label="Five diyas, one for each wedding day">
         <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 3 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>3 Dec</small></button>
         <button class="diya" type="button" aria-pressed="false" aria-label="Light the diya for 5 December"><i class="halo"></i><img src="assets/p72_diya.webp" alt="" loading="lazy"><span class="flame"></span><small>5 Dec</small></button>
@@ -647,24 +650,27 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   })();
   P.init();
 
-  // P7-2 Light a diya: five painted lamps (assets/p72_diya.webp), the candle_flame Lottie on each wick once tapped.
+  // P7-2 Light a diya: five painted lamps (assets/p72_diya.webp), the candle_flame Lottie on each wick once lit.
+  // P7-5: they light one by one as the row scrolls in (start()); a tap still lights one early.
   // All five lit -> blessing line + petal shower. Reduced motion: all lit, flames frozen, no petals.
   const diyas = [...document.querySelectorAll('.diya')], blessing = document.getElementById('blessing');
   const BLESS = 'May their home glow like these five lamps, always.';  // draft line, family to confirm
   const light = (b, still) => {
     if (b.getAttribute('aria-pressed') === 'true') return;
-    b.setAttribute('aria-pressed', 'true'); b.setAttribute('aria-label', b.getAttribute('aria-label').replace('Light', 'Lit:'));
+    b.setAttribute('aria-pressed', 'true');
     if (window.lottie) { const a = lottie.loadAnimation({container: b.querySelector('.flame'), renderer: 'svg', loop: true, autoplay: !still, path: 'assets/fx/candle_flame.json'});
       if (still) a.addEventListener('DOMLoaded', () => a.goToAndStop(Math.round(a.totalFrames / 2), true)); }
   };
   const allLit = () => {
+    if (blessing.classList.contains('on')) return;
     blessing.textContent = BLESS; blessing.classList.add('on');
     if (reduce) return;
     const r = document.querySelector('.diya-row').getBoundingClientRect();
     P.burst(r.left + r.width / 2, r.top, 46);
   };
   if (reduce) { diyas.forEach(b => light(b, true)); allLit(); }
-  else diyas.forEach(b => b.addEventListener('click', () => { light(b); if (diyas.every(d => d.getAttribute('aria-pressed') === 'true')) allLit(); }));
+  const lightUpTo = n => { diyas.slice(0, n).forEach(b => light(b)); if (diyas.every(d => d.getAttribute('aria-pressed') === 'true')) allLit(); };
+  if (!reduce) diyas.forEach(b => b.addEventListener('click', () => { light(b); lightUpTo(0); }));
 
   // Music: never autoplays; the button toggles it
   const music = document.getElementById('music'), tune = document.getElementById('tune'), mt = document.getElementById('music-t');
@@ -701,10 +707,11 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       .to(gate, {opacity: 0, duration: .7, ease: 'power2.out'}, '-=.5');
   });
 
-  // Gold-leaf date plaque. Touch: rub it off. Mouse/no touch: drag to rub, or scrolling wipes it (V1 pattern).
-  // Either way it reveals itself once the plaque has scrolled off the top, so no guest misses the date.
+  // Gold-leaf date plaque. P7-5: scrolling scratches it, scrubbed from the plaque entering the screen to its centre
+  // reaching mid-screen (100% there); a finger or mouse can still rub it. Already in view when the gate opens: it
+  // scratches itself to the end, so it never rests half done.
   const plaque = document.getElementById('plaque'), names = document.getElementById('names');
-  let revealed = false;
+  let revealed = false, gateOpen = false, scrub = null;
   const reveal = () => {
     if (revealed) return; revealed = true;
     names.classList.add('revealed');
@@ -744,22 +751,18 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     const cleared = () => { const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0, t = 0;
       for (let i = 3; i < d.length; i += 4 * 9) { t++; if (d[i] < 40) n++; } return n / t; };
     let checks = 0;
-    const stroke = (a, b) => { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke();
-      if (++checks % 6 === 0 && cleared() > .58) reveal(); };
+    const stroke = (a, b, rub) => { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke();
+      if (rub && ++checks % 6 === 0 && cleared() > .58) reveal(); };
     // rubbing (finger or mouse)
     let prev = null;
     const pt = e => { const r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-    c.addEventListener('pointerdown', e => { prev = pt(e); c.setPointerCapture(e.pointerId); stroke(prev, [prev[0] + .1, prev[1]]); });
-    c.addEventListener('pointermove', e => { if (!prev || revealed) return; const p = pt(e); stroke(prev, p); prev = p; });
+    c.addEventListener('pointerdown', e => { prev = pt(e); c.setPointerCapture(e.pointerId); stroke(prev, [prev[0] + .1, prev[1]], true); });
+    c.addEventListener('pointermove', e => { if (!prev || revealed) return; const p = pt(e); stroke(prev, p, true); prev = p; });
     ['pointerup', 'pointercancel'].forEach(t => c.addEventListener(t, () => prev = null));
-    // scroll wipe: a zigzag drawn up to the scroll progress, on devices without touch
-    const noTouch = matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const onScroll = () => {
-      if (revealed) return removeEventListener('scroll', onScroll);
-      const r = plaque.getBoundingClientRect();
-      if (r.bottom < 0) return reveal();
-      if (!noTouch) return;
-      const p = Math.min(1, scrollY / (innerHeight * .35)), n = zig.length - 1, upto = p * n;
+    // scroll wipe: a zigzag drawn up to progress p (0..1), never backwards
+    const wipe = p => {
+      if (revealed) return;
+      const n = zig.length - 1, upto = p * n;
       if (upto <= best) return;
       for (let k = Math.floor(best); k < Math.min(Math.ceil(upto), n); k++) {
         const a = zig[k], b = zig[k + 1], f = Math.min(1, upto - k), f0 = Math.max(0, best - k);
@@ -767,12 +770,28 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       }
       best = upto; if (p >= 1) reveal();
     };
-    addEventListener('scroll', onScroll, {passive: true});
+    const pr = {p: 0};
+    const to = (p, vars) => gsap.to(pr, {p, overwrite: true, onUpdate: () => wipe(pr.p), ...vars});
+    new ResizeObserver(() => wipe(pr.p)).observe(plaque);  // after a re-lay (draw() above), redraw the progress so far
+    // Scroll range, in page px: from the plaque's top entering the screen (or from where the page sits when the gate
+    // opens, as on load the plaque is often just above the fold) to its centre at mid-screen. Measured live, minus the
+    // card's .rv slide-in, so the leaf starts whole and that scroll does the whole scratch.
+    const card = plaque.closest('.rv'); let s0 = 0;
+    const range = () => { const r = plaque.getBoundingClientRect(), top = r.top - new DOMMatrix(getComputedStyle(card).transform).m42 + scrollY;
+      return [Math.max(s0, top - innerHeight), top + r.height / 2 - innerHeight / 2]; };
+    scrub = () => {
+      s0 = scrollY;
+      if (range()[1] - s0 < 24) { to(1, {duration: 1.6, delay: .4, ease: 'power1.inOut'}); return; }  // already mid-screen
+      ScrollTrigger.create({trigger: plaque, start: 'top bottom', end: 'bottom top', onUpdate: () => {
+        const [a, b] = range(); to(Math.max(pr.p, Math.min(1, (scrollY - a) / Math.max(1, b - a))), {duration: .35, ease: 'power1.out'}); }});
+    };
+    if (gateOpen) scrub();
   }
   if (!reduce && hasGsap) names.classList.add('pre');
   document.fonts.ready.then(scratch);  // plaque size depends on the web font
 
   function start() {
+    gateOpen = true; if (scrub) scrub();
     // Reveal on view
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
@@ -844,7 +863,12 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       }});
     });
 
+    if (!hasGsap && !reduce) lightUpTo(5);
     if (reduce || !hasGsap) return;
+
+    // P7-5 diyas light one by one as the row scrolls in: first at row top 88% of the screen, all five by row centre 55%
+    ScrollTrigger.create({trigger: '.diya-row', start: 'top 88%', end: 'center 55%', onUpdate: s =>
+      lightUpTo(innerHeight + scrollY >= document.documentElement.scrollHeight - 4 ? 5 : Math.ceil(s.progress * 5))});  // very tall screens: the page ends before 'center 55%'
 
     // Shooting star over the night sky (Day 5 onwards)
     const shoot = gsap.timeline({repeat: -1, repeatDelay: 5, paused: true})
