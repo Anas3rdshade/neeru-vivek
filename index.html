@@ -15,7 +15,7 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Outfit:wght@400;500;600&family=Rozha+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 /* V2 with P2 fresco art (assets/). Figures are plate-sized layers over their plates; the motion rig comes in P3. */
 :root{
@@ -24,12 +24,12 @@
   --indigo:#2E3A5C; --indigo-deep:#1B2140;
   --madder:#A8475E; --ochre:#B07A2A; --verdigris:#4F7D70;
   --ease:cubic-bezier(.32,.72,0,1);
-  --serif:"Fraunces",Georgia,serif; --sans:"Outfit",system-ui,sans-serif; --deva:"Rozha One",serif;
+  --serif:"Cinzel",Georgia,serif; --sans:"Cinzel",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif; --script:"Great Vibes",cursive; --deva:"Rozha One",serif;
   --arch:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V46C0 29 15 17 31 11C40 8 46 5 50 0C54 5 60 8 69 11C85 17 100 29 100 46V130Z'/%3E%3C/svg%3E");
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-bottom:80px;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);color:var(--ink);background:var(--plaster);font-size:17px;line-height:1.55;overflow-x:hidden}
+body{font-family:var(--body);font-weight:500;color:var(--ink);background:var(--plaster);font-size:18.5px;line-height:1.55;overflow-x:hidden}
 body.locked{overflow:hidden;height:100dvh}
 img{display:block;max-width:100%}
 a{color:inherit}
@@ -43,7 +43,7 @@ a{color:inherit}
 .sky[data-k=morning]{background:linear-gradient(180deg,#E3E9DD 0%,#EFEEE4 50%,var(--plaster) 100%)}
 .sky[data-k=noon]{background:linear-gradient(180deg,#F2DDB4 0%,#F4E8CF 50%,var(--plaster) 100%)}
 .sky[data-k=dusk]{background:linear-gradient(180deg,#CFAFBF 0%,#E7C6C0 40%,#F2E2D6 100%)}
-.sky[data-k=night]{background:linear-gradient(180deg,rgba(27,33,64,.15),rgba(27,33,64,.55)),url(assets/sky.webp) center/cover no-repeat,var(--indigo-deep)}
+.sky[data-k=night]{background:linear-gradient(180deg,#F5DC9E 0%,#F7E8C4 45%,var(--plaster) 100%)}  /* P8: the navy night went (family: Vidai unreadable); warm marigold ivory */
 .stars{position:absolute;inset:0}
 .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#FFF6E0;opacity:.2;animation:tw 5s var(--ease) infinite alternate}
 @keyframes tw{to{opacity:.95}}
@@ -61,18 +61,10 @@ section{padding:96px 0}
 
 /* ---------- Gate ---------- */
 #gate{position:fixed;inset:0;z-index:60;perspective:1400px;cursor:pointer;background:var(--plaster-2)}
-/* gate: a 2:3 frame that covers the screen; the door leaves sit BEHIND the plate, whose doorway is transparent,
-   so the painted arch and Ganesha never move when the doors open */
-.gate-frame{position:absolute;left:50%;top:50%;width:max(100vw,100dvh*2/3);aspect-ratio:2/3;transform:translate(-50%,-50%)}
-.gate-plate{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-/* door box from _p2_full/make_full_report.json: x .2578-.7383, y .3392-.9896 of the plate */
-.doors{position:absolute;left:25.78%;top:33.92%;width:48.05%;height:65.04%;perspective:900px}
-/* dawn sky behind the leaves: the opening doorway floods with first light */
-.dawn{position:absolute;inset:0;background:radial-gradient(70% 38% at 50% 82%,#FFF4DC 0%,rgba(255,244,220,0) 75%),linear-gradient(180deg,#E7B4B2 0%,#F1CFC6 38%,#F6E3D6 72%,#F4EEE3 100%)}
-.leaf{position:absolute;top:0;bottom:0;width:50%;background:center/100% 100% no-repeat;backface-visibility:hidden;will-change:transform}
-.leaf.l{left:0;background-image:url(assets/door_l.webp);transform-origin:left center}
-.leaf.r{right:0;background-image:url(assets/door_r.webp);transform-origin:right center}
-.lintel{position:absolute;top:calc(50% - max(100vw,100dvh*2/3)*1.5*.15);left:50%;transform:translateX(-50%);text-align:center;z-index:2;pointer-events:none;white-space:nowrap}
+/* P9: the gate is the door clip (9:16) covering the screen; it plays on the open tap */
+.gate-frame{position:absolute;left:50%;top:50%;width:max(100vw,100dvh*9/16);aspect-ratio:9/16;transform:translate(-50%,-50%)}
+.gate-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lintel{position:absolute;top:calc(50% - max(100vw,100dvh*9/16)*16/9*.43);left:50%;transform:translateX(-50%);text-align:center;z-index:2;pointer-events:none;white-space:nowrap}
 .roundel{width:92px;height:92px;margin:0 auto 8px;border-radius:50%;padding:4px;background:var(--plaster);box-shadow:0 0 0 1px rgba(168,71,94,.35),0 10px 30px -12px rgba(42,36,32,.35)}
 .roundel img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 .lintel p{font-size:16px;color:var(--ink);background:rgba(244,238,227,.88);padding:4px 12px;border-radius:99px;display:inline-block}
@@ -83,13 +75,12 @@ section{padding:96px 0}
 .seal span{display:block;font:500 9px/1 var(--sans);letter-spacing:.24em;margin-top:6px;opacity:.85}
 .gate-hint{position:absolute;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));text-align:center;z-index:3;pointer-events:none}
 .gate-hint b{display:inline-block;font:500 12px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;background:rgba(244,238,227,.9);padding:9px 14px;border-radius:99px;color:var(--ink)}
-.gate-hint small{display:table;margin:8px auto 0;font-family:var(--deva);font-size:15px;color:var(--ink);background:rgba(244,238,227,.92);padding:5px 12px;border-radius:99px}
 
 /* P7-3: on landscape screens the 2:3 cover crop cut Ganesha off; contain the plate and let the wide facade fill the sides */
 @media (min-aspect-ratio:1/1){
   #gate{background:linear-gradient(rgba(233,223,205,.6),rgba(233,223,205,.6)),url(assets/hero_plate_wide.webp) center/cover,var(--plaster-2)}
-  .gate-frame{width:min(100vw,100dvh*2/3);box-shadow:0 0 60px rgba(42,36,32,.35)}
-  .lintel{top:calc(50% - min(100vw,100dvh*2/3)*1.5*.15)}
+  .gate-frame{width:min(100vw,100dvh*9/16);box-shadow:0 0 60px rgba(42,36,32,.35)}
+  .lintel{top:calc(50% - min(100vw,100dvh*9/16)*16/9*.43)}
 }
 
 /* ---------- Names ---------- */
@@ -115,9 +106,9 @@ section{padding:96px 0}
 /* cream halo keeps the copy readable where it meets the painted frame */
 .in-arch .eyebrow{background:rgba(255,250,240,.9);color:var(--ink)}
 .in-arch .invite,.in-arch h1{text-shadow:0 0 2px #FBF3E8,0 0 10px rgba(251,243,232,.95),0 0 22px rgba(251,243,232,.8)}
-.invite{font:italic 500 17px/1.45 var(--serif);color:var(--ink);max-width:16em;margin:12px auto 0}
-h1{position:relative;font:400 clamp(54px,17vw,84px)/.95 var(--serif);letter-spacing:-.02em;margin:14px 0 0;color:var(--ink)}
-h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin:10px 0}
+.invite{font:italic 500 17px/1.45 var(--body);color:var(--ink);max-width:16em;margin:12px auto 0}
+h1{position:relative;font:400 clamp(60px,19vw,96px)/1.05 var(--script);letter-spacing:0;margin:14px 0 0;color:var(--ink)}
+h1 em{display:block;font-style:normal;font-size:1em;line-height:.62;color:var(--madder);margin:8px 0}
 /* gold-foil sweep: a gold copy of the names (the & hidden, so it stays madder) whose highlight band slides across.
    shortcut: animates background-position (paint only, one h1, 1.6 s in every 8 s), not transform */
 .foil{position:absolute;inset:0;color:transparent;pointer-events:none;
@@ -145,13 +136,12 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .pre .count div{opacity:0;transform:rotateX(-90deg)}
 .petals{position:fixed;inset:0;z-index:65;pointer-events:none;width:100%;height:100%}
 .shloka{margin-top:42px;font-size:19px;line-height:1.7;color:var(--ink)}
-.bless{font:italic 400 16px/1.4 var(--serif);color:var(--ink-2);margin-top:8px}
+.bless{font:italic 400 16px/1.4 var(--body);color:var(--ink-2);margin-top:8px}
 
 /* ---------- Niche (arched panel: double bezel) ---------- */
 .niche{position:relative;padding:7px;background:var(--plaster-2);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat}
-.niche-in{position:relative;overflow:hidden;background:var(--plaster-3);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat;aspect-ratio:4/5}
-.niche-in img,.niche-in canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fig{will-change:transform}
+.niche-in{position:relative;overflow:hidden;background:var(--plaster-3);-webkit-mask:var(--arch) center/100% 100% no-repeat;mask:var(--arch) center/100% 100% no-repeat;aspect-ratio:9/16}
+.niche-in img,.niche-in video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .roundel-sm{width:96px;height:96px;margin:42px auto 18px;border-radius:50%;padding:4px;background:var(--plaster);box-shadow:0 0 0 1px rgba(168,71,94,.35),0 10px 30px -12px rgba(42,36,32,.35)}
 .roundel-sm img{width:100%;height:100%;border-radius:50%;object-fit:cover}
 .venue-art{border-radius:12px;overflow:hidden;margin:-12px -10px 22px;aspect-ratio:3/2}
@@ -174,24 +164,24 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 /* P7-2: each family sits in a painted cusped arch (assets/p72_arch.webp, 720x1080) drawn as a border-image, so the arch
    grows with the text. Slices: crown 39% of the height, jambs 13.2% of the width, sill 2%; widths in cqw of the card. */
 .fam-card{container-type:inline-size}
-.fam-core{border-style:solid;border-width:58.5cqw 13.2cqw 3cqw;border-image:url(assets/p72_arch.webp) 39% 13.2% 2% stretch;
-  padding:0 6px 26px;text-align:center}
+.fam-core{background:rgba(255,250,240,.94);border-radius:20px;box-shadow:inset 0 0 0 1px rgba(176,122,42,.35),0 20px 40px -28px rgba(42,36,32,.45);
+  padding:30px 12px 26px;text-align:center}
 /* the opening is keyed transparent, so the text sits on the pale sky; the name rises into the crown.
    P7-3: the padding-box plaster wash was dropped, its top edge cut a hard line through the paragraphs */
-.fam-core h2{font:400 44px/1 var(--serif);margin:-30cqw 0 12px}
+.fam-core h2{font:400 64px/1.1 var(--script);margin:0 0 14px;color:#7E5414}
 .fam-core .eyebrow{margin:0 0 14px;background:rgba(255,250,240,.9);color:var(--ink)}
-.fam-core p{font-size:15.5px;color:#4A3F37;line-height:1.6}  /* P7-3: one step darker now the wash is gone */
-.weds{text-align:center;font:italic 400 22px/1 var(--serif);color:#983D54;padding:6px 0}
+.fam-core p{font-size:17px;color:#4A3F37;line-height:1.6}
+.fam-core p.one{white-space:nowrap}  /* family: each bracket line on one line; fitLines() shrinks it to the card */  /* P7-3: one step darker now the wash is gone */
+.weds{text-align:center;font:400 40px/1.1 var(--script);color:#983D54;padding:6px 0}
 
 /* ---------- Day chapters ---------- */
 /* P7-3: the scrubbed sun can pass behind a heading; a plaster halo keeps the heading crisp over it (night has no sun) */
-.day:not(.night) .day-head>span{text-shadow:0 0 2px var(--plaster),0 0 12px rgba(251,243,232,.95),0 0 26px rgba(251,243,232,.8)}
+.day .day-head>span{text-shadow:0 0 2px var(--plaster),0 0 12px rgba(251,243,232,.95),0 0 26px rgba(251,243,232,.8)}
 .day-head{font:inherit;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:end;margin-bottom:34px}
 /* P7-3: deeper ochre so the numeral (the only date number in the heading) clears 3:1 on every day sky, dusk included */
 .day-num{font:400 112px/.8 var(--serif);letter-spacing:-.04em;color:#7E5414;grid-row:span 2}
 .day-of{justify-self:start;font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink);padding:5px 9px;margin-left:-9px;border-radius:99px;background:rgba(251,243,232,.88)}
-.night .day-of{background:rgba(244,238,227,.12)}
-.day-name{font:italic 400 26px/1.1 var(--serif)}
+.day-name{font:italic 400 26px/1.1 var(--body)}
 .panels{display:grid;gap:44px}
 .panel figcaption{text-align:center;padding-top:18px}
 .panel h3{font:400 34px/1.05 var(--serif)}
@@ -199,28 +189,20 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .panel .deva{display:block;font-size:20px;color:#7A2E43;margin-top:4px}
 .time{display:inline-block;margin-top:12px;font:500 12.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:9px 14px;border-radius:99px;background:rgba(42,36,32,.07)}
 .motion-tag{position:absolute;top:58px;left:50%;transform:translateX(-50%);z-index:2;font:500 9.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;background:rgba(244,238,227,.9);padding:6px 10px;border-radius:99px;white-space:nowrap}
-/* swing pivot = the branch: y .125 of the plate = .05 of the niche after the 4:5 cover crop */
-.swing-fig{transform-origin:50% 5%;will-change:transform}
-/* P3 overlays: Lottie flames/petals/stars/lamp, screen-blended fire video, lantern glows; placed by JS from plate fractions */
-.fx{position:absolute;transform:translate(-50%,-50%);pointer-events:none}
-.fx svg{display:block}
-/* P5: tone the flat Lottie colours toward the fresco (blur tested and rejected: it reads as a smudge) */
-.fx:not(.v){filter:sepia(.3) saturate(.8);opacity:.92}
-.fx video{display:block;width:100%;height:100%;mix-blend-mode:screen;border-radius:50%;-webkit-mask:radial-gradient(closest-side,#000 60%,transparent);mask:radial-gradient(closest-side,#000 60%,transparent)}
-.fx.v{mix-blend-mode:screen}
-.glow{position:absolute;width:12%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,140,.85),rgba(255,190,90,.35) 45%,rgba(255,190,90,0));mix-blend-mode:screen;opacity:.35;pointer-events:none}
+/* P9: function names type in letter by letter when the card comes into view */
+.panel h3 .ch{opacity:0;transition:opacity .2s}
+.panel h3.typed .ch{opacity:1}
+/* P9: a marigold strand hangs in each shoulder of the arch and sways */
+.panel{position:relative}
+.panel::before,.panel::after{content:"";position:absolute;top:0;left:7%;width:14px;height:30%;z-index:1;pointer-events:none;transform-origin:50% 0;
+  background:radial-gradient(circle,#F7B43E 0 4px,#E2801C 5px,transparent 6.5px) 50% 0/14px 13px repeat-y,linear-gradient(#A9762E,#A9762E) 50% 0/1px 100% no-repeat;
+  animation:strand 3.4s ease-in-out infinite alternate}
+.panel::after{left:auto;right:7%;animation-delay:-1.7s}
+@keyframes strand{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.panel::before,.panel::after{animation:none}}
 
-.night{color:#F4EEE3}
-.night .day-of,.night .day-name{color:#E9DFCD}
-/* P7-3: the fixed moon and the star field sit behind night text; an indigo halo keeps it crisp */
-.night :is(.day-head>span,.regards p,.diya-hint,.blessing,.vidai-line){text-shadow:0 0 2px #1B2140,0 0 12px rgba(27,33,64,.9),0 0 24px rgba(27,33,64,.7)}
-.night .day-num{color:#E2B86A}
-.night .panel .deva{color:#E9B7C2}
-.night .time{background:rgba(244,238,227,.12)}
-.night .eyebrow{background:rgba(27,33,64,.62);color:#F4EEE3}  /* P7-3: darker pill, the star field sat behind the old glassy one */
-.night .card .eyebrow{background:rgba(42,36,32,.06);color:var(--ink-2)}
 #h1:focus{outline:none}
-.vidai-line{font:italic 400 24px/1.3 var(--serif);margin-top:10px}
+.vidai-line{font:italic 400 24px/1.3 var(--body);margin-top:10px}
 
 /* ---------- Cards on night ---------- */
 .card{background:rgba(255,252,246,.94);color:var(--ink);border-radius:20px;padding:6px;box-shadow:0 30px 60px -30px rgba(10,12,30,.6)}
@@ -238,9 +220,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 .btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
 .addr{font-size:15.5px;color:var(--ink-2);margin-top:10px}
 .regards{text-align:center;padding-bottom:150px}
-.regards p{color:#E9DFCD;max-width:22em;margin:12px auto 0;line-height:1.7}
-.regards .darshan{font:italic 400 22px/1.2 var(--serif);color:#F4EEE3;margin-top:14px}
-.regards .sign{font:400 46px/1 var(--serif);color:#F4EEE3;margin-top:44px}
+.regards p{color:var(--ink-2);max-width:22em;margin:12px auto 0;line-height:1.7}
+.regards .darshan{font:italic 500 24px/1.2 var(--body);color:#983D54;margin-top:14px}
+.regards .sign{font:400 54px/1.1 var(--script);color:#7E5414;margin-top:44px}
 
 /* ---------- Day rail ---------- */
 .rail{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,140%);z-index:40;display:flex;gap:2px;padding:5px;border-radius:99px;background:rgba(244,238,227,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(42,36,32,.08),0 14px 30px -14px rgba(42,36,32,.4);transition:transform .9s var(--ease)}
@@ -261,9 +243,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 
 /* ---------- P7-2 Light a diya ---------- */
 #diyas{text-align:center;padding-top:40px;padding-bottom:40px;overflow-x:clip}  /* lit halos (120% wide) on the end lamps spill past a phone edge */
-.diya-hint{color:#E9DFCD;margin-top:12px;font-size:15.5px}
+.diya-hint{color:var(--ink-2);margin-top:12px;font-size:15.5px}
 .diya-row{display:flex;justify-content:center;gap:4px;margin:30px auto 0}
-.diya{position:relative;flex:0 1 64px;min-width:56px;min-height:44px;padding:44px 2px 6px;border:0;border-radius:16px;background:none;cursor:pointer;color:#E9DFCD;font:inherit}
+.diya{position:relative;flex:0 1 64px;min-width:56px;min-height:44px;padding:44px 2px 6px;border:0;border-radius:16px;background:none;cursor:pointer;color:var(--ink-2);font:inherit}
 .diya img{width:100%;height:auto}
 .diya small{display:block;margin-top:6px;font:500 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
 /* flame (candle_flame Lottie) stands on the wick at the spout; the glow is a soft disc, opacity only */
@@ -273,8 +255,8 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   background:radial-gradient(closest-side,rgba(255,206,120,.55),rgba(255,180,80,.18) 55%,rgba(255,180,80,0));opacity:0;transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
 .diya[aria-pressed=true] .flame{opacity:1}
 .diya[aria-pressed=true] .halo{opacity:1;transform:translateX(-50%) scale(1)}
-.diya[aria-pressed=true] small{color:#FFE7B0}
-.blessing{text-wrap:balance;font:italic 400 22px/1.35 var(--serif);color:#FFF1D2;max-width:17em;margin:26px auto 0;opacity:0;transform:translateY(14px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+.diya[aria-pressed=true] small{color:#7E5414}
+.blessing{text-wrap:balance;font:italic 400 22px/1.35 var(--body);color:#7A2E43;max-width:17em;margin:26px auto 0;opacity:0;transform:translateY(14px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
 .blessing.on{opacity:1;transform:none}
 
 /* ---------- P7-2 sun-to-moon arc + atishbazi sparkle (fixed sky, behind the content) ---------- */
@@ -328,14 +310,13 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 <!-- Gate -->
 <div id="gate" role="dialog" aria-modal="true" aria-label="Wedding invitation, tap to open">
   <div class="gate-frame">
-    <div class="doors"><div class="dawn"></div><div class="leaf l"></div><div class="leaf r"></div></div>
-    <img class="gate-plate" src="assets/gate_plate.webp" alt="A painted Shekhawati haveli doorway with Shri Ganesha on the lintel">
+    <video id="door" muted playsinline preload="auto" poster="assets/clips/door.webp" src="assets/clips/door.mp4" aria-hidden="true"></video>
   </div>
   <div class="lintel">
     <p class="deva" lang="hi">॥ श्री गणेशाय नमः ॥</p>
   </div>
   <button class="seal" id="seal" aria-label="Open the invitation">N&amp;V<span>OPEN</span></button>
-  <div class="gate-hint"><b>Tap anywhere to open</b><small lang="hi">कहीं भी छूकर निमंत्रण खोलें</small></div>
+  <div class="gate-hint"><b>Tap anywhere to open</b></div>
 </div>
 
 <!-- "Traditional wedding_ceremonial vibe with shehna" by DesiFreeMusic, pixabay.com/music/...-376293, Pixabay Content License (no attribution; checked 2026-11-02) -->
@@ -392,15 +373,15 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap fam">
       <div class="fam-card rv"><div class="fam-core">
         <h2>Neeru</h2>
-        <p>(Granddaughter of Late Smt. Ankor&nbsp;Devi &amp; Late Shri Pratap&nbsp;Singh&nbsp;Jakhar)</p>
-        <p>(Daughter of Smt. Sushila&nbsp;Devi &amp; Shri Mahendra&nbsp;Kumar&nbsp;Jakhar)</p>
+        <p class="one">(Granddaughter of Late Smt. Ankor&nbsp;Devi &amp; Late Shri Pratap&nbsp;Singh&nbsp;Jakhar)</p>
+        <p class="one">(Daughter of Smt. Sushila&nbsp;Devi &amp; Shri Mahendra&nbsp;Kumar&nbsp;Jakhar)</p>
         <p>R/o Vill. Dudi (Presently residing at Pilani), Jhunjhunu</p>
       </div></div>
       <p class="weds rv">weds</p>
       <div class="fam-card rv"><div class="fam-core">
         <h2>Vivek</h2>
-        <p>(Grandson of Late Smt. Shanti&nbsp;Devi &amp; Late Shri Richhpal&nbsp;Singh)</p>
-        <p>(Son of Smt. Ompati&nbsp;Devi &amp; Shri Satyavir&nbsp;Singh)</p>
+        <p class="one">(Grandson of Late Smt. Shanti&nbsp;Devi &amp; Late Shri Richhpal&nbsp;Singh)</p>
+        <p class="one">(Son of Smt. Ompati&nbsp;Devi &amp; Shri Satyavir&nbsp;Singh)</p>
         <p>R/o Village Dagroli, Charkhi&nbsp;Dadri</p>
       </div></div>
     </div>
@@ -411,7 +392,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">03</span><span class="day-of">Day one of five</span><span class="day-name">Thursday, December</span></h2>
       <div class="panels">
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/lagan_plate.webp" alt="A woman of the family carries the aarti thali for the Lagan" loading="lazy"><img class="fig" data-fig="lagan" src="assets/lagan_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/lagan.webp" data-src="assets/clips/lagan.mp4" aria-label="A woman of the family holds the aarti thali with a lit diya and the lagan letter"></video></div></div>
           <figcaption><h3>Lagan</h3><span class="deva" lang="hi">लगन</span><span class="time">10:15 AM</span></figcaption></figure>
       </div>
     </div>
@@ -422,11 +403,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">05</span><span class="day-of">Day two of five</span><span class="day-name">Saturday, December</span></h2>
       <div class="panels two">
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/baan_plate.webp" alt="Two women anoint the seat for the Baan" loading="lazy"><img class="fig" data-fig="baan" src="assets/baan_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/baan.webp" data-src="assets/clips/baan.mp4" aria-label="Bangled hands sprinkle marigold petals and turmeric on the chowki for the Baan"></video></div></div>
           <figcaption><h3>Baan</h3><span class="deva" lang="hi">बान</span><span class="time">10:15 AM</span></figcaption></figure>
-        <figure class="panel rv"><div class="niche"><div class="niche-in" id="swing">
-            <img src="assets/mehendi_plate.webp" alt="The bride on a swing hung from a mango branch at the Mehendi" loading="lazy">
-            <img class="fig swing-fig" data-fig="mehendi" src="assets/mehendi_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/mehendi.webp" data-src="assets/clips/mehendi.mp4" aria-label="Mehendi is drawn on the bride’s palm, ending in the name Vivek"></video></div></div>
           <figcaption><h3>Mehendi</h3><span class="deva" lang="hi">मेहँदी</span><span class="time">5:15 PM</span></figcaption></figure>
       </div>
     </div>
@@ -437,9 +416,9 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">06</span><span class="day-of">Day three of five</span><span class="day-name">Sunday, December</span></h2>
       <div class="panels two">
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/haldi_plate.webp" alt="Women toss marigold petals at the Haldi" loading="lazy"><img class="fig" data-fig="haldi" src="assets/haldi_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/haldi.webp" data-src="assets/clips/haldi.mp4" aria-label="Haldi paste is smoothed onto the bride’s palm"></video></div></div>
           <figcaption><h3>Haldi</h3><span class="deva" lang="hi">हल्दी</span><span class="time">11:15 AM</span></figcaption></figure>
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/sangeet_plate.webp" alt="Two women dance ghoomar at the Ladies' Sangeet" loading="lazy"><img class="fig" data-fig="sangeet" src="assets/sangeet_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/sangeet.webp" data-src="assets/clips/sangeet.mp4" aria-label="Women play the dholak and clap at the Ladies’ Sangeet"></video></div></div>
           <figcaption><h3>Ladies' Sangeet</h3><span class="deva" lang="hi">महिला संगीत</span><span class="time">6:15 PM</span></figcaption></figure>
       </div>
     </div>
@@ -450,13 +429,13 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">07</span><span class="day-of">Day four · The wedding</span><span class="day-name">Monday, December</span></h2>
       <div class="panels two">
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/chakbhaat_plate.webp" alt="Women carry kalash pots past the potter's wheel at the Chak Bhaat" loading="lazy"><img class="fig" data-fig="chakbhaat" src="assets/chakbhaat_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/chakbhaat.webp" data-src="assets/clips/chakbhaat.mp4" aria-label="Women walk with brass kalash pots on their heads for the Chak Bhaat"></video></div></div>
           <figcaption><h3>Chak Bhaat</h3><span class="deva" lang="hi">चाक भात</span><span class="time">10:15 AM</span></figcaption></figure>
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/baraat_plate.webp" alt="The groom rides his mare to the haveli for the Baraat Aagaman" loading="lazy"><img class="fig" data-fig="baraat" src="assets/baraat_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/baraat.webp" data-src="assets/clips/baraat.mp4" aria-label="The groom’s white mare steps along a petal-strewn path for the Baraat Aagaman"></video></div></div>
           <figcaption><h3>Baraat Aagaman</h3><span class="deva" lang="hi">बारात आगमन</span><span class="time">4:15 PM</span></figcaption></figure>
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/dhukav_plate.webp" alt="The groom raises the neem stick to the toran at the Dhukav" loading="lazy"><img class="fig" data-fig="dhukav" src="assets/dhukav_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/dhukav.webp" data-src="assets/clips/dhukav.mp4" aria-label="The groom raises a neem twig to the toran at the haveli door for the Dhukav"></video></div></div>
           <figcaption><h3>Dhukav</h3><span class="deva" lang="hi">ढुकाव</span><span class="time">7:15 PM</span></figcaption></figure>
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/panigrahan_plate.webp" alt="The bride and groom sit hand in hand at the sacred fire" loading="lazy"><img class="fig" data-fig="panigrahan" src="assets/panigrahan_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/panigrahan.webp" data-src="assets/clips/panigrahan.mp4" aria-label="The bride’s and groom’s joined hands rest above the sacred fire"></video></div></div>
           <figcaption><h3>Panigrahan Sanskar</h3><span class="deva" lang="hi">पाणिग्रहण संस्कार</span><span class="time">As per auspicious Muhurat</span></figcaption></figure>
       </div>
     </div>
@@ -467,7 +446,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     <div class="wrap">
       <h2 class="day-head rv"><span class="day-num">08</span><span class="day-of">Day five of five</span><span class="day-name">Tuesday, December</span></h2>
       <div class="panels">
-        <figure class="panel rv"><div class="niche"><div class="niche-in"><img src="assets/vidai_plate.webp" alt="Bearers carry the doli out under the stars at the Vidai" loading="lazy"><img class="fig" data-fig="vidai" src="assets/vidai_fig.webp" alt="" loading="lazy"></div></div>
+        <figure class="panel rv"><div class="niche"><div class="niche-in"><video class="clip" muted loop playsinline preload="none" poster="assets/clips/vidai.webp" data-src="assets/clips/vidai.mp4" aria-label="The flower-draped doli moves away through the haveli gate at the Vidai"></video></div></div>
           <figcaption><h3>Vidai</h3><span class="deva" lang="hi">विदाई</span>
             <p class="vidai-line">Taaron Ki Chhaon Mein</p><span class="deva" lang="hi">तारों की छाँव में</span></figcaption></figure>
       </div>
@@ -555,39 +534,17 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // P8: each family bracket line stays on one line; shrink its type until it fits the card
+  // all bracket lines share the size of the tightest one, so the two cards read as one set
+  const fitLines = () => {
+    const ls = [...document.querySelectorAll('.fam-core p.one')]; ls.forEach(p => p.style.fontSize = '');
+    const k = Math.min(1, ...ls.map(p => p.clientWidth / p.scrollWidth * .98));
+    if (k < 1) ls.forEach(p => p.style.fontSize = parseFloat(getComputedStyle(p).fontSize) * k + 'px');
+  };
+  document.fonts.ready.then(fitLines); addEventListener('resize', fitLines);
   const hasGsap = !!window.gsap;
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
   history.scrollRestoration = 'manual'; scrollTo(0, 0);
-
-  // P3 motion table. All positions are fractions of the 2:3 plate; Y() maps plate y to % of the 4:5 niche (cover crops 1/12 top and bottom).
-  const Y = y => (y - 1 / 12) / (5 / 6) * 100;
-  // figure loops: a <-> b extremes (dx, dy plate fractions; deg), pivot at the feet, d = half-cycle seconds, bob = walking step (dy)
-  const M = {
-    lagan:      {piv: [.27, .87], a: {deg: -2}, b: {deg: 2}, d: 3},
-    baan:       {a: {dx: -.015}, b: {dx: .015}, d: 2.5},
-    mehendi:    {piv: [.5, .125], a: {deg: -1.4}, b: {deg: 1.4}, d: 2.6},
-    haldi:      {a: {dy: 0}, b: {dy: -.02}, d: 2},
-    sangeet:    {piv: [.55, .86], a: {deg: -3}, b: {deg: 3}, d: 3.5},
-    chakbhaat:  {a: {dx: -.05}, b: {dx: .05}, d: 4, bob: -.006},
-    baraat:     {piv: [.45, .88], a: {dx: -.04, deg: -1}, b: {dx: .04, deg: 1}, d: 3.5, bob: -.006},
-    dhukav:     {piv: [.27, .89], a: {deg: -2}, b: {deg: 2}, d: 2.5},
-    panigrahan: {a: {dy: .004}, b: {dy: -.008}, d: 2.5},
-    vidai:      {a: {dx: -.06, dy: 0}, b: {dx: .06, dy: -.02}, d: 4}
-  };
-  // dx is a fraction of the width (= xPercent); dy is a fraction of the plate height = 1.2x the niche height
-  const TF = m => Object.assign({}, 'dx' in m && {xPercent: m.dx * 100}, 'dy' in m && {yPercent: m.dy * 120}, 'deg' in m && {rotation: m.deg});
-  // overlays: [asset (v: = video), centre x, centre y, width as a fraction of the niche]; assets/fx/ from _p3_motion/make_fx.py
-  const FX = {
-    lagan:      [['candle_flame', .721, .668, .07], ['candle_flame', .770, .665, .07]],
-    baan:       [['candle_flame', .909, .777, .07]],
-    dhukav:     [['candle_flame', .845, .646, .06], ['candle_flame', .896, .646, .06], ['candle_flame', .947, .646, .06]],
-    haldi:      [['petals_falling', .45, .42, .75]],
-    panigrahan: [['v:sparks', .494, .56, .34], ['v:fire', .494, .668, .17]],
-    vidai:      [['twinkle_stars', .62, .24, .8], ['shooting_star', .64, .26, .62]]
-  };
-  const AR = {candle_flame: '3/4', twinkle_stars: '1125/168', shooting_star: '1520/1045'};
-  // warm pulse on the five painted Baraat lanterns (P5: the photo hanging-lamp Lottie was dropped; it could not be toned to the fresco)
-  const GLOW = {baraat: [[.2, .357], [.316, .357], [.452, .337], [.6, .299], [.744, .254]]};
 
   // Stars for the night sky
   const stars = document.getElementById('stars');
@@ -695,16 +652,17 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
   };
   gate.addEventListener('click', () => {
     if (opened) return; opened = true;
+    // P8 (family: music on opening): the open tap is a user gesture, the earliest point a browser lets audio start
+    tune.play().then(() => setMusic(true)).catch(() => setMusic(false));
     if (reduce || !hasGsap) return finish();
+    document.getElementById('door').play().catch(() => {});
     gsap.timeline({onComplete: finish})
       .to('.seal', {scale: .6, opacity: 0, duration: .5, ease: 'power3.in'})
       .to('.lintel,.gate-hint', {opacity: 0, duration: .5, ease: 'power2.out'}, '<')
-      .to('.leaf.l', {rotateY: -104, duration: 1.7, ease: 'expo.inOut'}, '-=.1')
-      .to('.leaf.r', {rotateY: 104, duration: 1.7, ease: 'expo.inOut'}, '<')
-      .call(() => P.burst(innerWidth / 2, innerHeight * .42, 44), null, '<.7')
-      .to('.gate-frame', {scale: 1.12, duration: 1.8, ease: 'power2.inOut'}, '<.5')
-      .to(gate, {backgroundColor: 'rgba(233,223,205,0)', duration: 1.2, ease: 'power2.out'}, '<.4')
-      .to(gate, {opacity: 0, duration: .7, ease: 'power2.out'}, '-=.5');
+      .call(() => P.burst(innerWidth / 2, innerHeight * .45, 44), null, 2.2)
+      .to('.gate-frame', {scale: 1.15, duration: 3.2, ease: 'power1.in'}, 1.4)
+      .to(gate, {backgroundColor: 'rgba(233,223,205,0)', duration: 1, ease: 'power2.out'}, 3.4)
+      .to(gate, {opacity: 0, duration: .8, ease: 'power2.out'}, 3.8);
   });
 
   // Gold-leaf date plaque. P7-5: scrolling scratches it, scrubbed from the plaque entering the screen to its centre
@@ -739,7 +697,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
       for (let i = 1; i < 6; i++) { x.beginPath(); x.moveTo(w * i / 6 + (Math.random() - .5) * 8, 0); x.lineTo(w * i / 6 + (Math.random() - .5) * 8, h); x.stroke(); }
       for (let i = 0; i < 700; i++) { x.fillStyle = `rgba(255,250,225,${Math.random() * .35})`; x.fillRect(Math.random() * w, Math.random() * h, 1.2, 1.2); }
       x.strokeStyle = 'rgba(122,46,67,.55)'; x.strokeRect(5.5, 5.5, w - 11, h - 11);
-      x.fillStyle = 'rgba(90,40,30,.75)'; x.font = '600 11px Outfit, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillStyle = 'rgba(90,40,30,.75)'; x.font = '600 11px Cinzel, serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
       x.fillText('✦  THE  WEDDING  DAY  ✦', w / 2, h / 2);
       x.globalCompositeOperation = 'destination-out'; x.lineCap = x.lineJoin = 'round'; x.lineWidth = lw;
       zig = []; for (let y = lw * .3, i = 0; y < h + lw * .3; y += lw * .55, i++) zig.push([i % 2 ? w + 4 : -4, y]);
@@ -792,6 +750,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
 
   function start() {
     gateOpen = true; if (scrub) scrub();
+    const live = new Set(), petals = (k, on) => { on ? live.add(k) : live.delete(k); P.drift(live.size > 0); };
     // Reveal on view
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
@@ -803,7 +762,7 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
         .fromTo('.h-pea.r', {rotation: 2.5}, {rotation: -2, duration: 3.1, ease: 'sine.inOut', yoyo: true, repeat: -1}, .4)
         .fromTo('.h-toran', {rotation: -1.1, transformOrigin: '50% 0%'}, {rotation: 1.1, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0)
         .fromTo('.h-pig', {y: 0}, {y: -3, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
-      ScrollTrigger.create({trigger: names, start: 'top bottom', end: 'bottom top', onToggle: s => { s.isActive ? idle.play() : idle.pause(); P.drift(s.isActive); }});
+      ScrollTrigger.create({trigger: names, start: 'top bottom', end: 'bottom top', onToggle: s => { s.isActive ? idle.play() : idle.pause(); petals('names', s.isActive); }});
       const par = {trigger: names, start: 'top top', end: 'bottom top', scrub: true};
       gsap.to('.h-plate,.h-veil', {yPercent: 14, ease: 'none', scrollTrigger: par});
       gsap.to('.h-toran', {yPercent: 120, ease: 'none', scrollTrigger: par});
@@ -822,45 +781,19 @@ h1 em{display:block;font-style:italic;font-size:.38em;color:var(--madder);margin
     }), {rootMargin: '-45% 0px -45% 0px'});
     document.querySelectorAll('[data-sky]').forEach(s => so.observe(s));
 
-    // Overlays on every panel; in reduced motion they stay as still frames
-    document.querySelectorAll('.fig').forEach(fig => {
-      const k = fig.dataset.fig, box = fig.parentElement, fx = [];
-      (FX[k] || []).forEach(([n, x, y, w]) => {
-        const el = document.createElement('div');
-        el.className = 'fx' + (n.startsWith('v:') ? ' v' : '');
-        el.style.cssText = `left:${x * 100}%;top:${Y(y)}%;width:${w * 100}%;aspect-ratio:${AR[n] || 1}`;
-        if (n.startsWith('v:')) {
-          const v = document.createElement('video');
-          Object.assign(v, {muted: true, loop: true, playsInline: true, preload: 'none', poster: `assets/fx/${n.slice(2)}.jpg`, src: `assets/fx/${n.slice(2)}.mp4`});
-          v.setAttribute('muted', ''); v.setAttribute('aria-hidden', 'true');
-          el.appendChild(v); fx.push({play: () => v.play().catch(() => {}), pause: () => v.pause()});
-        } else {
-          let a = null; const go = [];
-          fx.push({
-            load() { if (a || !window.lottie) return; a = lottie.loadAnimation({container: el, renderer: 'svg', loop: true, autoplay: false, path: `assets/fx/${n}.json`});
-              a.addEventListener('DOMLoaded', () => { go.splice(0).forEach(f => f()); if (reduce) a.goToAndStop(Math.round(a.totalFrames / 2), true); }); },
-            play() { this.load(); a && a.isLoaded ? a.play() : go.push(() => a.play()); },
-            pause() { a && a.pause(); go.length = 0; }
-          });
-        }
-        box.appendChild(el);
-      });
-      (GLOW[k] || []).forEach(([x, y]) => { const g = document.createElement('i'); g.className = 'glow'; g.style.cssText = `left:${x * 100}%;top:${Y(y)}%`; box.appendChild(g); });
-      if (reduce || !hasGsap) { fx.forEach(f => f.load && f.load()); return; }
-
-      // one slow loop per figure layer, ranges = the extremes checked in _p2_full/make_full.py
-      const m = M[k], tl = gsap.timeline({paused: true});
-      if (m) {
-        if (m.piv) gsap.set(fig, {transformOrigin: `${m.piv[0] * 100}% ${Y(m.piv[1])}%`});
-        tl.fromTo(fig, TF(m.a), {...TF(m.b), duration: m.d, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
-        if (m.bob) tl.fromTo(fig, {yPercent: 0}, {yPercent: m.bob * 120, duration: m.d / 6, ease: 'sine.inOut', yoyo: true, repeat: -1}, 0);
-      }
-      const glows = box.querySelectorAll('.glow');
-      if (glows.length) tl.to(glows, {opacity: .9, duration: 1.1, ease: 'sine.inOut', stagger: {each: .37, repeat: -1, yoyo: true}}, 0);
-      ScrollTrigger.create({trigger: box, start: 'top bottom', end: 'bottom top', onToggle: s => {
-        box.classList.toggle('live', s.isActive);
-        s.isActive ? (tl.play(), fx.forEach(f => f.play())) : (tl.pause(), fx.forEach(f => f.pause()));
-      }});
+    // P9: each card is a looping clip, loaded on first view and playing only while on screen (reduced motion keeps the poster)
+    const vo = new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause();
+      petals(v, e.isIntersecting);
+    }), {threshold: .25});
+    if (!reduce) document.querySelectorAll('.clip').forEach(v => vo.observe(v));
+    // function names type in when their card is on screen; the heading keeps its full name for screen readers
+    const to = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('typed'); to.unobserve(e.target); } }), {threshold: .6});
+    document.querySelectorAll('.panel h3').forEach(h => {
+      const t = h.textContent; h.setAttribute('aria-label', t);
+      h.innerHTML = [...t].map((c, i) => `<span class="ch" aria-hidden="true" style="transition-delay:${i * 70}ms">${c}</span>`).join('');
+      reduce ? h.classList.add('typed') : to.observe(h);
     });
 
     if (!hasGsap && !reduce) lightUpTo(5);
