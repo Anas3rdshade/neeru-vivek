@@ -15,7 +15,7 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Rozha+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 /* V2 with P2 fresco art (assets/). Figures are plate-sized layers over their plates; the motion rig comes in P3. */
 :root{
@@ -24,7 +24,7 @@
   --indigo:#2E3A5C; --indigo-deep:#1B2140;
   --madder:#A8475E; --ochre:#B07A2A; --verdigris:#4F7D70;
   --ease:cubic-bezier(.32,.72,0,1);
-  --serif:"Cinzel",Georgia,serif; --sans:"Cinzel",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif; --script:"Great Vibes",cursive; --deva:"Rozha One",serif;
+  --serif:"Cinzel",Georgia,serif; --sans:"Cinzel",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif; --script:"Parisienne",cursive; --deva:"Rozha One",serif;
   --arch:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V46C0 29 15 17 31 11C40 8 46 5 50 0C54 5 60 8 69 11C85 17 100 29 100 46V130Z'/%3E%3C/svg%3E");
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -222,7 +222,7 @@ h1 em{display:block;font-style:normal;font-size:1em;line-height:.62;color:var(--
 .regards{text-align:center;padding-bottom:150px}
 .regards p{color:var(--ink-2);max-width:22em;margin:12px auto 0;line-height:1.7}
 .regards .darshan{font:italic 500 24px/1.2 var(--body);color:#983D54;margin-top:14px}
-.regards .sign{font:400 54px/1.1 var(--script);color:#7E5414;margin-top:44px}
+.regards .sign{font:400 min(54px,13.6vw)/1.1 var(--script);white-space:nowrap;color:#7E5414;margin-top:44px}
 
 /* ---------- Day rail ---------- */
 .rail{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,140%);z-index:40;display:flex;gap:2px;padding:5px;border-radius:99px;background:rgba(244,238,227,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(42,36,32,.08),0 14px 30px -14px rgba(42,36,32,.4);transition:transform .9s var(--ease)}
@@ -735,8 +735,10 @@ h1 em{display:block;font-style:normal;font-size:1em;line-height:.62;color:var(--
     // opens, as on load the plaque is often just above the fold) to its centre at mid-screen. Measured live, minus the
     // card's .rv slide-in, so the leaf starts whole and that scroll does the whole scratch.
     const card = plaque.closest('.rv'); let s0 = 0;
-    const range = () => { const r = plaque.getBoundingClientRect(), top = r.top - new DOMMatrix(getComputedStyle(card).transform).m42 + scrollY;
-      return [Math.max(s0, top - innerHeight), top + r.height / 2 - innerHeight / 2]; };
+    // P10: visible height (phone toolbars make innerHeight unreliable), done with the centre at 60% of it, so the date is whole by mid-screen
+    const range = () => { const r = plaque.getBoundingClientRect(), top = r.top - new DOMMatrix(getComputedStyle(card).transform).m42 + scrollY,
+        vh = (window.visualViewport && visualViewport.height) || innerHeight;
+      return [Math.max(s0, top - vh), top + r.height / 2 - vh * .6]; };
     scrub = () => {
       s0 = scrollY;
       if (range()[1] - s0 < 24) { to(1, {duration: 1.6, delay: .4, ease: 'power1.inOut'}); return; }  // already mid-screen
